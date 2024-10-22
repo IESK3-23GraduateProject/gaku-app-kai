@@ -1,26 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import "@/styles/globals.css";
 ---
 
 <Layout title="理念">
-  <main class="justify-center items-center h-screen text-center">
+  <main class=" h-screen flex flex-col justify-center items-center text-center ">
     <h1 class="font-bold">学校法人 山口学園</h1><br />
     <h2 class="font-bold">山口学園の理念</h2>
-    <hr />
-    <p>
+    <hr class="w-1/2" />
+    <p class="my-4">
       実践的な専門知識の教育と技能の習得を通じて、社会が求むところの高度専門職業人の養成、且つ、豊かな社会、平和と幸福を希求してやまないこころ豊かな社会人の育成をはかる。
     </p><br />
     <h2 class="font-bold">【教育目的】</h2>
-    <hr />
-    <p>
+    <hr class="w-1/2" />
+    <p class="my-4">
       本学は学校教育法及び教育基本法に基づき、情報処理教育を通じて高度な技術力・柔軟な思考力・豊かな人間性を有し、創造力・リーダーシップ・問題解決力に優れた企業及び社会が必要とする人材を育成することを目的とする。以て世界の情報ネットワークの推進と情報社会の発展に貢献したい。
     </p><br />
   </main>
+</Layout>
 
   <style>
     body {
       padding: 5%;
+      overflow: hidden;
     }
 
     h1,
@@ -40,4 +41,3 @@ import "@/styles/globals.css";
       border-color: #25a5ec;
     }
   </style>
-</Layout>

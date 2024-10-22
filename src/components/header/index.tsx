@@ -9,7 +9,7 @@ export default function Header({ title }: { title: string }) {
     const menuItems = [
         {
             title: "ホーム",
-            url: "",
+            url: "/",
             icon: Home,
         },
         {
@@ -34,7 +34,7 @@ export default function Header({ title }: { title: string }) {
         },
         {
             title: "理念",
-            url: "#",
+            url: "/philosophy",
             icon: Sprout,
         },
         {
