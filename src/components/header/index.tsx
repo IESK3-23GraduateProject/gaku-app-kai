@@ -9,7 +9,7 @@ export default function Header() {
     const menuItems = [
         {
             title: "ホーム",
-            url: "#",
+            url: "",
             icon: Home,
         },
         {
@@ -67,7 +67,7 @@ export default function Header() {
                         <nav className="flex flex-col space-y-4 mt-4 ">
                             {menuItems.map((item, index) => (
                                 <a
-                                    href="#"
+                                    href={item.url}
                                     key={index}
                                     className="text-sm  text-secondary-foreground flex items-center justify-start gap-3 text-[#3f3f46]"
                                     onClick={toggleMenu}
