@@ -30,7 +30,7 @@ export default function SearchBar() {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto p-2 sm:hidden">
+        <div className="w-full max-w-lg mx-auto p-2 sm:hidden">
             <div className="flex flex-row items-center justify-between gap-2">
                 <div className="flex-grow relative">
                     <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
