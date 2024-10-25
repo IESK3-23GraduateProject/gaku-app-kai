@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-export default function SearchBar() {
+export default function MobileSearchBar() {
     const [searchQuery, setSearchQuery] = useState('')
     const [category, setCategory] = useState('')
     const [sortOption, setSortOption] = useState('Relevance')
