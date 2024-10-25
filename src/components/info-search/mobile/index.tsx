@@ -30,13 +30,12 @@ export default function MobileSearchBar() {
     }
 
     return (
-        <div className="w-full max-w-lg mx-auto p-2 sm:hidden">
-            <div className="flex flex-row items-center justify-between gap-2">
+        <div className="w-full max-w-lg mx-auto p-2 md:hidden">
+            <div className="flex flex-row items-center justify-center gap-2 ">
                 <div className="flex-grow relative">
-                    <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                        }`}>
+                    <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out flex items-center ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                         <Select value={category} onValueChange={setCategory}>
-                            <SelectTrigger className="w-full focus:ring-1">
+                            <SelectTrigger className="w-full focus:ring-1 h-7 flex items-center">
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent>
@@ -59,7 +58,7 @@ export default function MobileSearchBar() {
                             placeholder="Search posts..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full"
+                            className="w-full h-9"
                         />
                     </div>
                 </div>

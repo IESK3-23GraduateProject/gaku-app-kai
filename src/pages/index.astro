@@ -1,10 +1,12 @@
 ---
+import DesktopSearchBar from '@/components/info-search/desktop';
 import Layout from '../layouts/Layout.astro';
-import MobileSearchBar from '@/components/info-search'
+import MobileSearchBar from '@/components/info-search/mobile'
 ---
 
 <Layout title="ホーム">
 	<main class="pt-12">
+		<DesktopSearchBar client:load></DesktopSearchBar>
 		<MobileSearchBar client:load></MobileSearchBar>
 		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente cum tenetur, reprehenderit est veniam reiciendis sit a sed officiis sunt dolores recusandae possimus architecto ea. Deserunt labore iusto suscipit, iure corporis debitis nemo. Voluptatum modi molestiae tempore possimus, tempora consequatur accusantium, at hic obcaecati explicabo iure enim blanditiis totam. In eos enim sint optio cupiditate eaque tenetur ullam asperiores laborum aliquam. Amet vitae, odio aliquid consequuntur qui repellat, corporis doloribus ullam totam debitis commodi atque quasi iusto maxime perspiciatis a. Animi at, iure eum ab ratione vero dolores? Eveniet alias aspernatur temporibus ipsam maxime nulla quod optio iusto eius rem atque non, voluptates delectus repudiandae aperiam repellendus a error magni. Ipsum nulla alias officia molestiae omnis recusandae, rerum voluptatibus illum eveniet soluta! Dolores nihil nesciunt minus, provident quasi laudantium ipsam eaque sunt quod inventore adipisci! Rem ducimus dolores animi optio aliquid enim odio, hic architecto? Quidem sit ex soluta voluptatem dolore sequi magni ullam hic atque adipisci, neque eaque, porro in commodi blanditiis pariatur? Hic quo recusandae fuga rem laudantium officia nisi praesentium mollitia iure incidunt soluta quisquam inventore et similique est in vel molestiae, facere autem neque quae. Maiores, ipsam. Laudantium unde non odit ea, aperiam pariatur assumenda quis.</p>
 	</main>
