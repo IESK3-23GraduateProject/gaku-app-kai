@@ -55,7 +55,7 @@ export default function Header({ title }: { title: string }) {
     ]
 
     return (
-        <header className="fixed top-0 left-0 right-0 h-12 backdrop-blur-sm bg-background/95 supports-[backdrop-filter]:bg-background/80 border-b flex items-center justify-between px-4 sm:hidden">
+        <header className="fixed top-0 left-0 right-0 z-10 h-12 backdrop-blur-sm bg-background/95 supports-[backdrop-filter]:bg-background/80 border-b flex items-center justify-between px-4 sm:hidden">
             <div className="container mx-auto h-12 flex items-center justify-between">
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>

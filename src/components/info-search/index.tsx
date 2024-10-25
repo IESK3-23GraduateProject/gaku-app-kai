@@ -30,7 +30,7 @@ export default function SearchBar() {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto p-2">
+        <div className="w-full max-w-md mx-auto p-2 sm:hidden">
             <div className="flex flex-row items-center justify-between gap-2">
                 <div className="flex-grow relative">
                     <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
@@ -44,11 +44,11 @@ export default function SearchBar() {
                                 <SelectItem value="school">学校からの連絡</SelectItem>
                                 <SelectItem value="teacher">担任からの連絡</SelectItem>
                                 <SelectItem value="career">キャリアセンターより</SelectItem>
-                                <SelectItem value="other">その他</SelectItem>
                                 <SelectItem value="event">学校行事</SelectItem>
                                 <SelectItem value="library">図書館からの連絡</SelectItem>
                                 <SelectItem value="admin">事務局からの連絡</SelectItem>
                                 <SelectItem value="circle">クラブ・サークル</SelectItem>
+                                <SelectItem value="other">その他</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
