@@ -36,7 +36,7 @@ export default function SearchBar() {
                     <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
                         }`}>
                         <Select value={category} onValueChange={setCategory}>
-                            <SelectTrigger className="w-full">
+                            <SelectTrigger className="w-full focus:ring-1">
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent>
