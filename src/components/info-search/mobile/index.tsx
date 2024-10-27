@@ -30,7 +30,7 @@ export default function MobileSearchBar() {
     }
 
     return (
-        <div className="w-full max-w-lg mx-auto p-2 md:hidden">
+        <div className="w-full max-w-lg mx-auto py-2 md:hidden">
             <div className="flex flex-row items-center justify-center gap-2 ">
                 <div className="flex-grow relative">
                     <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out flex items-center ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
