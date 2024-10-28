@@ -1,20 +1,12 @@
 import { useState } from 'react'
-import { SearchIcon, ArrowUpDown } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
 const categories = [
-    { value: 'all', label: '全てのお知らせ' },
+    { value: 'all', label: 'all' },
     { value: 'school', label: '学校からの連絡' },
     { value: 'teacher', label: '担任からの連絡' },
-    { value: 'career', label: 'キャリアセンターより' },
+    { value: 'career', label: 'キャリアセンター' },
     { value: 'event', label: '学校行事' },
     { value: 'library', label: '図書館からの連絡' },
     { value: 'admin', label: '事務局からの連絡' },
