@@ -6,7 +6,7 @@ const categories = [
     { value: 'all', label: 'all' },
     { value: 'school', label: '学校からの連絡' },
     { value: 'teacher', label: '担任からの連絡' },
-    { value: 'career', label: 'キャリアセンター' },
+    { value: 'career', label: 'キャリアセンターより' },
     { value: 'event', label: '学校行事' },
     { value: 'library', label: '図書館からの連絡' },
     { value: 'admin', label: '事務局からの連絡' },
@@ -40,7 +40,6 @@ export default function DesktopSearchBar() {
                         </Button>
                     ))}
                 </div>
-
             </div>
         </div>
     )
