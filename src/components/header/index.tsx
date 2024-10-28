@@ -39,7 +39,7 @@ export default function Header({ title }: { title: string }) {
         },
         {
             title: "連絡先",
-            url: "#",
+            url: "address",
             icon: Phone,
         },
         {
