@@ -82,7 +82,7 @@ const items = [
 	<main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 ">
 		<DesktopSearchBar client:load></DesktopSearchBar>
 		<MobileSearchBar client:load></MobileSearchBar>
-		<ol class="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-lg">
+		<ol class="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
 			{items.map((item) => (
 				<div class="col-span-10 px-2 sm:px-4 [&_a]:last:border-none">
 				<a href={`/news/${item.postId}`} class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b ">

@@ -1,0 +1,10 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Calendar from '@/components/calendar'
+---
+
+<Layout title="学校行事">
+    <main class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20 ">
+        <Calendar client:load></Calendar>
+    </main>
+</Layout>
