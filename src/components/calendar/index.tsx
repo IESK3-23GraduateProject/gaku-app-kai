@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react'
 import {
     add,
     eachDayOfInterval,
@@ -12,13 +12,14 @@ import {
     parse,
     parseISO,
     startOfToday,
+    startOfWeek,
+    endOfWeek,
 } from 'date-fns'
 import { useState } from 'react'
 
 function classNames(...classes: (string | boolean)[]) {
     return classes.filter(Boolean).join(' ')
 }
-
 
 type Event = {
     id: number;
@@ -36,22 +37,40 @@ export default function Calendar({ events }: CalendarProps) {
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
+    let [isWeekView, setIsWeekView] = useState(false)
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
-    let days = eachDayOfInterval({
-        start: firstDayCurrentMonth,
-        end: endOfMonth(firstDayCurrentMonth),
-    })
+    // Get days based on current view
+    let days = isWeekView
+        ? eachDayOfInterval({
+            start: startOfWeek(selectedDay),
+            end: endOfWeek(selectedDay),
+        })
+        : eachDayOfInterval({
+            start: firstDayCurrentMonth,
+            end: endOfMonth(firstDayCurrentMonth),
+        })
 
-
-    function previousMonth() {
-        let firstDayPreviousMonth = add(firstDayCurrentMonth, { months: -1 })
-        setCurrentMonth(format(firstDayPreviousMonth, 'MMM-yyyy'))
+    function previousPeriod() {
+        if (isWeekView) {
+            setSelectedDay(add(selectedDay, { weeks: -1 }))
+        } else {
+            let firstDayPreviousMonth = add(firstDayCurrentMonth, { months: -1 })
+            setCurrentMonth(format(firstDayPreviousMonth, 'MMM-yyyy'))
+        }
     }
 
-    function nextMonth() {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-        setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    function nextPeriod() {
+        if (isWeekView) {
+            setSelectedDay(add(selectedDay, { weeks: 1 }))
+        } else {
+            let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
+            setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+        }
+    }
+
+    function toggleView() {
+        setIsWeekView(!isWeekView)
     }
 
     let selectedDayEvents = events.filter((event) =>
@@ -61,26 +80,40 @@ export default function Calendar({ events }: CalendarProps) {
     return (
         <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
             <div className="md:pr-14">
-                <div className="flex items-center">
+                <div className="flex items-center justify-between">
                     <h2 className="flex-auto font-semibold text-gray-900">
-                        {format(firstDayCurrentMonth, 'MMMM yyyy')}
+                        {isWeekView
+                            ? `Week of ${format(startOfWeek(selectedDay), 'MMM d, yyyy')}`
+                            : format(firstDayCurrentMonth, 'MMMM yyyy')}
                     </h2>
-                    <button
-                        type="button"
-                        onClick={previousMonth}
-                        className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-                    >
-                        <span className="sr-only">Previous month</span>
-                        <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-                    </button>
-                    <button
-                        onClick={nextMonth}
-                        type="button"
-                        className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-                    >
-                        <span className="sr-only">Next month</span>
-                        <ChevronRight className="w-5 h-5" aria-hidden="true" />
-                    </button>
+                    <div className="flex items-center space-x-2">
+                        <button
+                            onClick={toggleView}
+                            type="button"
+                            className="flex items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                        >
+                            <CalendarIcon className="w-5 h-5" />
+                            <span className="ml-1 text-sm">
+                                {isWeekView ? 'Month' : 'Week'}
+                            </span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={previousPeriod}
+                            className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                        >
+                            <span className="sr-only">Previous {isWeekView ? 'week' : 'month'}</span>
+                            <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                        </button>
+                        <button
+                            onClick={nextPeriod}
+                            type="button"
+                            className="-my-1.5 -mr-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                        >
+                            <span className="sr-only">Next {isWeekView ? 'week' : 'month'}</span>
+                            <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                        </button>
+                    </div>
                 </div>
                 <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
                     <div className='text-red-600'>S</div>
@@ -96,7 +129,7 @@ export default function Calendar({ events }: CalendarProps) {
                         <div
                             key={day.toString()}
                             className={classNames(
-                                dayIdx === 0 && colStartClasses[getDay(day)],
+                                !isWeekView && dayIdx === 0 && colStartClasses[getDay(day)],
                                 'py-1.5'
                             )}
                         >
@@ -129,7 +162,6 @@ export default function Calendar({ events }: CalendarProps) {
                                 <time dateTime={format(day, 'yyyy-MM-dd')}>
                                     {format(day, 'd')}
                                 </time>
-
                             </button>
 
                             <div className="w-1 h-1 mx-auto mt-1">
@@ -143,20 +175,20 @@ export default function Calendar({ events }: CalendarProps) {
                     ))}
                 </div>
             </div>
-            <section className="mt-6 md:mt-0 md:pl-14 ">
+            <section className="mt-6 md:mt-0 md:pl-14">
                 <h2 className="font-semibold text-gray-900">
                     Events for{' '}
                     <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                        {format(selectedDay, 'MMM dd,  yyy')}
+                        {format(selectedDay, 'MMM dd, yyyy')}
                     </time>
                 </h2>
-                <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 bg-red-300 rounded-lg min-h-52 ">
+                <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 min-h-24">
                     {selectedDayEvents.length > 0 ? (
                         selectedDayEvents.map((event) => (
                             <Event event={event} key={event.id} />
                         ))
                     ) : (
-                        <p>No meetings for today.</p>
+                        <p>No Events for today.</p>
                     )}
                 </ol>
             </section>
@@ -190,7 +222,6 @@ function Event({ event }: { event: Event }) {
         </li>
     )
 }
-
 
 let colStartClasses = [
     '',

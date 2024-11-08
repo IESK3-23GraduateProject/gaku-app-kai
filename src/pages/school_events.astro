@@ -58,15 +58,15 @@ const events = [
             {events.map((event) => (
 				<div class="col-span-10 [&_a]:last:border-none">
 				<a href='#' class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b">
-                    <time datetime={event.startDatetime} class="lg:col-span-3">
+                    <time datetime={event.startDatetime} class="lg:col-span-3 text-xs min-w-fit">
                                 {format(parseISO(event.startDatetime), 'EEE, d MMM')}
                     </time>
-					<div class="lg:col-span-7">
+					<div class="lg:col-span-7 w-full">
 						<h3 class="text-foreground text-sm lg:text-base group-hover:underline ">{event.name}</h3>
 					</div>
-					<div class="lg:col-span-2 flex justify-start gap-1 w-full text-xs mt-2 lg:mt-0 ">
-                        <p class="mt-0.5 lg:ml-auto ">
-                            <time datetime={event.startDatetime}>
+					<div class="lg:col-span-2 flex justify-start text-xs lg:mt-0 w-full">
+                        <p class="mt-0.5 lg:ml-20">
+                            <time datetime={event.startDatetime} >
                                 {format(parseISO(event.startDatetime), 'h:mm a')}
                             </time>{' '}
                             -{' '}
