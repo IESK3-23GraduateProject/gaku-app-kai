@@ -19,7 +19,7 @@ export default function Header({ title }: { title: string }) {
         },
         {
             title: "学校行事",
-            url: "#",
+            url: "/school_events",
             icon: Calendar,
         },
         {
