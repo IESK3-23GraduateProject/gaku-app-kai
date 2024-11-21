@@ -11,8 +11,15 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePicker() {
-    const [date, setDate] = React.useState<Date>()
+export function DatePicker({
+    selected,
+    onSelect,
+    placeholder = "Pick a date"
+}: {
+    selected?: Date,
+    onSelect: (date: Date | undefined) => void,
+    placeholder?: string
+}) {
     const [isOpen, setIsOpen] = React.useState(false)
 
     return (
@@ -23,20 +30,20 @@ export function DatePicker() {
                     onClick={() => setIsOpen(!isOpen)}
                     className={cn(
                         "justify-start text-left font-normal rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1  w-full focus:ring-1 h-7 flex items-center",
-                        !date && "text-muted-foreground "
+                        !selected && "text-muted-foreground "
                     )}
                 >
-                    <CalendarIcon />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {selected ? format(selected, "PPP") : <span>{placeholder}</span>}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
                 <Calendar
                     mode="single"
-                    selected={date}
+                    selected={selected}
                     onSelect={(selectedDate) => {
-                        setDate(selectedDate)
-                        setIsOpen(false) // Close the popover when a date is selected
+                        onSelect(selectedDate)
+                        setIsOpen(false)
                     }}
                     initialFocus
                 />
