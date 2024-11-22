@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "@/styles/globals.css";
+
+export const prerender = true;
+---
+
+<Layout title="連絡先">
+  <main class="justify-center items-center h-screen text-center">
+    <h1 class="font-bold">ECCコンピュータ専門学校</h1>
+    <table class="address_table" align="center">
+      <tr>
+        <th>教務課</th>
+        <td>TEL <a href="tel:">06-6374-0144</a></td>
+      </tr>
+      <tr>
+        <th>事務局</th>
+        <td>TEL <a href="tel:">06-6374-0144</a></td>
+      </tr>
+      <tr>
+        <th>進路指導課</th>
+        <td>TEL <a href="tel:">06-6376-4733</a></td>
+      </tr>
+    </table><br />
+    <div class="text">
+      <p>〒530-0015 大阪北区中崎西2-3-35</p><br />
+      <p>受付時間：平日 9:00～20:00</p>
+      <p class="p">土曜 9:00～17:00</p>
+      <p>休み：日曜・祝日・学校指定の休日</p>
+    </div><br><br>
+    <p class="kome">
+      ※フリーダイヤルは使用できません。<br />
+      上記ダイヤルへ連絡してください。
+    </p>
+  </main>
+</Layout>
+<style>
+  h1{
+    margin-top: 50px;
+  }
+  .text{
+    text-align: center;
+    display: inline-block;
+  }
+  .text p{
+    text-align: left;
+  }
+  .address_table{
+    margin-top: 20px;
+  }
+  .address_table th, .address_table td{
+    border: 1px solid #6e858b;
+    padding: 4px;
+  }
+  .address_table th{
+    background-color: rgba(158, 228, 248, 0.616);
+  }
+  a:hover{
+    color: rgb(108, 236, 236);
+  }
+  .p{
+    text-indent: 5em;
+  }
+  .kome{
+    font-size: 80%;
+  }
+</style>
