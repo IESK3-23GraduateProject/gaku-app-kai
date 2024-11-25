@@ -88,7 +88,7 @@ const items : NewsItem[] = [
 ---
 
 <Layout title="ホーム">
-	<main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen">
+	<main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen max-w-screen-2xl w-full">
 		<DesktopSearchBar client:load></DesktopSearchBar>
 		<MobileSearchBar client:load></MobileSearchBar>
     <InfoSection client:load items={items}/>

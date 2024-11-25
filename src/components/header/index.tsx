@@ -24,7 +24,7 @@ export default function Header({ title }: { title: string }) {
         },
         {
             title: "出席状態確認",
-            url: "#",
+            url: "/absent_forms",
             icon: BookOpen,
         },
         {
