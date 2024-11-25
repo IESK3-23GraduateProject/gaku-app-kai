@@ -1,6 +1,6 @@
-import { useState } from 'react'
+// components/info-search/mobile.tsx
+import { useStore } from '@nanostores/react'
 import { SearchIcon, ArrowUpDown, X } from 'lucide-react'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -10,31 +10,34 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { searchQuery, selectedCategory, sortOption, isSearchVisible } from '@/lib/newsSearchStore'
 
 export default function MobileSearchBar() {
-    const [searchQuery, setSearchQuery] = useState('')
-    const [category, setCategory] = useState('')
-    const [sortOption, setSortOption] = useState('Relevance')
-    const [isSearchVisible, setIsSearchVisible] = useState(false)
+    const $searchQuery = useStore(searchQuery)
+    const $category = useStore(selectedCategory)
+    const $isSearchVisible = useStore(isSearchVisible)
 
-    const handleSearch = () => {
-        console.log('Searching for:', searchQuery, 'in category:', category, 'sorted by:', sortOption)
-        // Implement your search logic here
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        searchQuery.set(e.target.value)
+
+        console.log('Search state updated:', { query: $searchQuery, })
+
     }
 
     const toggleSearch = () => {
-        setIsSearchVisible(!isSearchVisible)
-        if (isSearchVisible) {
-            handleSearch()
-        }
+        isSearchVisible.set(!$isSearchVisible)
+        console.log("isSearchVisible", isSearchVisible.get())
     }
 
     return (
         <div className="w-full max-w-lg mx-auto py-2 md:hidden">
-            <div className="flex flex-row items-center justify-center gap-2 ">
+            <div className="flex flex-row items-center justify-center gap-2">
                 <div className="flex-grow relative">
-                    <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out flex items-center ${isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                        <Select value={category} onValueChange={setCategory}>
+                    <div className={`absolute inset-0 transition-opacity duration-300 ease-in-out flex items-center ${$isSearchVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                        <Select
+                            value={$category}
+                            onValueChange={(value) => selectedCategory.set(value)}
+                        >
                             <SelectTrigger className="w-full focus:ring-1 h-7 flex items-center">
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
@@ -51,13 +54,12 @@ export default function MobileSearchBar() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className={`transition-opacity duration-300 ease-in-out ${isSearchVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                        }`}>
+                    <div className={`transition-opacity duration-300 ease-in-out ${$isSearchVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                         <Input
                             type="text"
                             placeholder="Search posts..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={$searchQuery}
+                            onChange={(e) => handleSearch(e)}
                             className="w-full h-9"
                         />
                     </div>
@@ -68,12 +70,14 @@ export default function MobileSearchBar() {
                     onClick={toggleSearch}
                     className="transition-transform duration-300 ease-in-out hover:scale-105"
                 >
-                    {isSearchVisible ? (
+                    {$isSearchVisible ? (
                         <X className="h-4 w-4" />
                     ) : (
                         <SearchIcon className="h-4 w-4" />
                     )}
-                    <span className="sr-only">{isSearchVisible ? 'Close Search' : 'Search'}</span>
+                    <span className="sr-only">
+                        {$isSearchVisible ? 'Close Search' : 'Search'}
+                    </span>
                 </Button>
 
                 <DropdownMenu>
@@ -88,19 +92,19 @@ export default function MobileSearchBar() {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setSortOption('Relevance')}>
+                        <DropdownMenuItem onClick={() => sortOption.set('Relevance')}>
                             Relevance
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSortOption('Date (Newest)')}>
+                        <DropdownMenuItem onClick={() => sortOption.set('Date (Newest)')}>
                             日付（最新順）
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSortOption('Date (Oldest)')}>
+                        <DropdownMenuItem onClick={() => sortOption.set('Date (Oldest)')}>
                             日付（最古順）
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSortOption('Title (A-Z)')}>
+                        <DropdownMenuItem onClick={() => sortOption.set('Title (A-Z)')}>
                             Title (A-Z)
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setSortOption('Title (Z-A)')}>
+                        <DropdownMenuItem onClick={() => sortOption.set('Title (Z-A)')}>
                             Title (Z-A)
                         </DropdownMenuItem>
                     </DropdownMenuContent>

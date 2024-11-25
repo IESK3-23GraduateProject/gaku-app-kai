@@ -2,8 +2,17 @@
 import DesktopSearchBar from '@/components/info-search/desktop';
 import Layout from '../layouts/Layout.astro';
 import MobileSearchBar from '@/components/info-search/mobile'
+import InfoSection from '@/components/info-section';
 
-const items = [
+interface NewsItem {
+  postId: number;
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+}
+
+const items : NewsItem[] = [
     {
       postId:1,
       title: "【キャリアセンター】求人情報プリント発行します(8/26発行）",
@@ -40,35 +49,35 @@ const items = [
       date: "2024年10月27日"
     },
 	{   
-    postId:5,
+    postId:6,
       title: "学年混合ゲーム制作イベントGameIndustriesJamを学生主体で開催！",
       description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
       category: "学校からの連絡",
       date: "2024年10月27日"
     },
 	{
-      postId:6,
+      postId:7,
       title: "ピアスッタフ募集！！",
       description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
       category: "学校からの連絡",
       date: "2024年10月27日"
     },
 	{
-      postId:7,
+      postId:8,
       title: "夏期選択講座 受講許可一覧",
       description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
       category: "学校からの連絡",
       date: "2024年10月27日"
     },
 	{
-      postId:8,
+      postId:9,
       title: "保健室・学生相談室だより【夏号】",
       description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
       category: "学校からの連絡",
       date: "2024年10月27日"
     },
 	{   
-      postId:9,
+      postId:10,
       title: "近隣のマンションから苦情がきています。",
       description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
       category: "学校からの連絡",
@@ -82,29 +91,7 @@ const items = [
 	<main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen">
 		<DesktopSearchBar client:load></DesktopSearchBar>
 		<MobileSearchBar client:load></MobileSearchBar>
-		<ol class="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
-			{items.map((item) => (
-				<div class="col-span-10 px-2 sm:px-4 [&_a]:last:border-none">
-				<a href={`/news/${item.postId}`} class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b ">
-					<div class="lg:col-span-9 px-2">
-						<h3 class="text-foreground text-sm lg:text-base group-hover:underline ">{item.title}</h3>
-						<p class="hidden lg:block text-xs text-muted-foreground mt-2 max-w-xl">
-                            {item.description}
-                        </p> 
-					</div>
-					<div class="lg:col-span-3 flex justify-start gap-1 w-full text-xs mt-2 lg:mt-0">
-    					<div class="text-foreground-lighter group-hover:text-foreground-light min-w-fit">
-        					<div class="inline-flex items-center whitespace-nowrap rounded-full bg-opacity-10 bg-surface-200 text-foreground-light border border-strong px-2.5 py-0.5 text-xs group-hover:border-foreground-muted capitalize">
-            					{item.category}
-        					</div>    
-    					</div>
-   						 <p class="text-foreground-lighter group-hover:text-foreground-light whitespace-nowrap lg:ml-auto ">
-        					{item.date}
-    					</p>
-					</div>
-				</a>
-			</div>
-			))}	
-		</ol>
+    <InfoSection client:load items={items}/>
 	</main>
+ 
 </Layout>
