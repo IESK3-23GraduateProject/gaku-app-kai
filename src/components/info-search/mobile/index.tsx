@@ -15,7 +15,6 @@ import { searchQuery, selectedCategory, sortOption, isSearchVisible } from '@/li
 export default function MobileSearchBar() {
     const $searchQuery = useStore(searchQuery)
     const $category = useStore(selectedCategory)
-    const $sortOption = useStore(sortOption)
     const $isSearchVisible = useStore(isSearchVisible)
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
