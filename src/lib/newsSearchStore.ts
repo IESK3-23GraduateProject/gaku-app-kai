@@ -2,11 +2,18 @@
 import { atom } from "nanostores";
 
 interface NewsItem {
-  postId: number;
+  student_news_id: number;
   title: string;
-  description: string;
-  category: string;
-  date: string;
+  news_category_name: string;
+  news_contents: string;
+  author_name: string;
+  is_public:boolean;
+  high_priority:boolean;
+  publish_at:string;
+  created_at:string;
+  updated_at:string;
+  read_at:string;
+  is_read:boolean;
 }
 export const test = atom<string>("Test atom");
 export const searchQuery = atom<string>("");
@@ -27,7 +34,7 @@ export const getFilteredItems = (items: NewsItem[]) => {
     filtered = filtered.filter(
       (item) =>
         item.title.toLowerCase().includes(query) ||
-        item.description.toLowerCase().includes(query)
+        item.news_contents.toLowerCase().includes(query)
     );
   }
 
@@ -36,19 +43,19 @@ export const getFilteredItems = (items: NewsItem[]) => {
     filtered = filtered.filter((item) => {
       switch (category) {
         case "school":
-          return item.category === "学校からの連絡";
+          return item.news_category_name === "学校からの連絡";
         case "teacher":
-          return item.category === "担任からの連絡";
+          return item.news_category_name === "担任からの連絡";
         case "career":
-          return item.category === "キャリアセンターより";
+          return item.news_category_name === "キャリアセンターより";
         case "library":
-          return item.category === "図書館からの連絡";
+          return item.news_category_name === "図書館からの連絡";
         case "admin":
-          return item.category === "事務局からの連絡";
+          return item.news_category_name === "事務局からの連絡";
         case "circle":
-          return item.category === "クラブ・サークル";
+          return item.news_category_name === "クラブ・サークル";
         case "other":
-          return item.category === "その他";
+          return item.news_category_name === "その他";
         default:
           return true;
       }
@@ -59,9 +66,9 @@ export const getFilteredItems = (items: NewsItem[]) => {
   filtered.sort((a, b) => {
     switch (sort) {
       case "Date (Newest)":
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return new Date(b.publish_at).getTime() - new Date(a.publish_at).getTime();
       case "Date (Oldest)":
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+        return new Date(a.publish_at).getTime() - new Date(b.publish_at).getTime();
       case "Title (A-Z)":
         return a.title.localeCompare(b.title);
       case "Title (Z-A)":

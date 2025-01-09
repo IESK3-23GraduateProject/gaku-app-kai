@@ -22,11 +22,17 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 type Event = {
-    id: number;
-    name: string;
-    imageUrl: string;
-    startDatetime: string;
-    endDatetime: string;
+    event_id: number;
+    title: string;
+    description: string;
+    location: string;
+    start_datetime: string;
+    end_datetime: string;
+    related_news_url: string;
+    is_public: boolean;
+    is_cancelled: boolean;
+    created_at: string;
+    updated_at:string;
 };
 
 interface CalendarProps {
@@ -74,7 +80,7 @@ export default function Calendar({ events }: CalendarProps) {
     }
 
     let selectedDayEvents = events.filter((event) =>
-        isSameDay(parseISO(event.startDatetime), selectedDay)
+        isSameDay(parseISO(event.start_datetime), selectedDay)
     )
 
     return (
@@ -166,7 +172,7 @@ export default function Calendar({ events }: CalendarProps) {
 
                             <div className="w-1 h-1 mx-auto mt-1">
                                 {events.some((event) =>
-                                    isSameDay(parseISO(event.startDatetime), day)
+                                    isSameDay(parseISO(event.start_datetime), day)
                                 ) && (
                                         <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                                     )}
@@ -185,7 +191,7 @@ export default function Calendar({ events }: CalendarProps) {
                 <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500 min-h-24">
                     {selectedDayEvents.length > 0 ? (
                         selectedDayEvents.map((event) => (
-                            <Event event={event} key={event.id} />
+                            <Event event={event} key={event.event_id} />
                         ))
                     ) : (
                         <p>No Events for today.</p>
@@ -197,24 +203,24 @@ export default function Calendar({ events }: CalendarProps) {
 }
 
 function Event({ event }: { event: Event }) {
-    let startDateTime = parseISO(event.startDatetime)
-    let endDateTime = parseISO(event.endDatetime)
+    let startDateTime = parseISO(event.start_datetime)
+    let endDateTime = parseISO(event.end_datetime)
 
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-            <img
+            {/* <img
                 src={event.imageUrl}
                 alt=""
                 className="flex-none w-10 h-10 rounded-full"
-            />
+            /> */}
             <div className="flex-auto">
-                <p className="text-gray-900">{event.name}</p>
+                <p className="text-gray-900">{event.title}</p>
                 <p className="mt-0.5">
-                    <time dateTime={event.startDatetime}>
+                    <time dateTime={event.start_datetime}>
                         {format(startDateTime, 'h:mm a')}
                     </time>{' '}
                     -{' '}
-                    <time dateTime={event.endDatetime}>
+                    <time dateTime={event.end_datetime}>
                         {format(endDateTime, 'h:mm a')}
                     </time>
                 </p>
