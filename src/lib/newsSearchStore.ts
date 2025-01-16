@@ -7,13 +7,13 @@ interface NewsItem {
   news_category_name: string;
   news_contents: string;
   author_name: string;
-  is_public:boolean;
-  high_priority:boolean;
-  publish_at:string;
-  created_at:string;
-  updated_at:string;
-  read_at:string;
-  is_read:boolean;
+  is_public: boolean;
+  high_priority: boolean;
+  publish_at: string;
+  created_at: string;
+  updated_at: string;
+  read_at: string;
+  is_read: boolean;
 }
 export const test = atom<string>("Test atom");
 export const searchQuery = atom<string>("");
@@ -66,9 +66,13 @@ export const getFilteredItems = (items: NewsItem[]) => {
   filtered.sort((a, b) => {
     switch (sort) {
       case "Date (Newest)":
-        return new Date(b.publish_at).getTime() - new Date(a.publish_at).getTime();
+        return (
+          new Date(b.publish_at).getTime() - new Date(a.publish_at).getTime()
+        );
       case "Date (Oldest)":
-        return new Date(a.publish_at).getTime() - new Date(b.publish_at).getTime();
+        return (
+          new Date(a.publish_at).getTime() - new Date(b.publish_at).getTime()
+        );
       case "Title (A-Z)":
         return a.title.localeCompare(b.title);
       case "Title (Z-A)":
