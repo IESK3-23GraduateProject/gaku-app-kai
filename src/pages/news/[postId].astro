@@ -1,42 +1,62 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-
-const item = { 
-      postId:1,
-      title: "「外国人留学生の滞在に伴う家族等の渡日状況アンケート調査」への協力のお願い",
-      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
-      category: "キャリアセンターより",
-      date: "2024年10月27日"
-      }
+const { postId } = Astro.params;
+const fetchstudentNewsData = async () => {
+  const response = await fetch(`http://localhost:3000/student-news/${postId}`);
+  const data = await response.json();
+  return data;
+};
+const item = await fetchstudentNewsData();
+console.log(item);
 ---
+
 <Layout title="お知らせ">
-<main class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20 xl:mt-0 min-h-screen">
+  <main
+    class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20 xl:mt-0 min-h-screen"
+  >
     <div class="grid grid-cols-12 gap-4">
-        <div class="hidden col-span-12 xl:block lg:col-span-2">
-            <a class="text-muted-foreground hover:text-foreground flex cursor-pointer items-center text-sm transition" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
-                Back
-            </a>
-        </div>
-        <div class="col-span-12 lg:col-span-12 xl:col-span-10">
-            <div class="mb-6 lg:mb-10 max-w-5xl space-y-8">
-                <div class="space-y-2">
-                    <a class="inline  text-sky-500 font-bold text-sm lg:text-md" href="/">{item.category}</a>
-                    <h1 class="text-lg lg:text-xl">{item.title}</h1>
-                    <div class="text-light flex space-x-3 text-sm ">
-                        <p>{item.date}</p>
-                        <p>•</p>
-                        <p>五条悟</p>
-                    </div>
-                </div>
+      <div class="hidden col-span-12 xl:block lg:col-span-2">
+        <a
+          class="text-muted-foreground hover:text-foreground flex cursor-pointer items-center text-sm transition"
+          href="/"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-chevron-left"
+            ><path d="m15 18-6-6 6-6"></path></svg
+          >
+          Back
+        </a>
+      </div>
+      <div class="col-span-12 lg:col-span-12 xl:col-span-10">
+        <div class="mb-6 lg:mb-10 max-w-5xl space-y-8">
+          <div class="space-y-2">
+            <a class="inline text-sky-500 font-bold text-sm lg:text-md" href="/"
+              >{item[0].news_category_name}</a
+            >
+            <h1 class="text-lg lg:text-xl">{item[0].title}</h1>
+            <div class="text-light flex space-x-3 text-sm">
+              <p>{item[0].publish_at}</p>
+              <p>•</p>
+              <p>{item[0].author_name}</p>
             </div>
-            <div class="grid grid-cols-12 ">
-                <div class="col-span-12 lg:col-span-10 overflow-x-hidden">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto modi voluptatibus dolores enim aut, culpa nostrum beatae officia ipsa. Consequatur possimus quaerat vero cupiditate ducimus architecto mollitia rerum amet omnis. Cum distinctio amet cumque sapiente explicabo saepe minima ullam error ut facilis porro suscipit voluptatem adipisci reprehenderit atque perspiciatis delectus, corporis aut dolorum molestias? Incidunt, voluptatem inventore? Rem amet ipsum debitis fugiat doloribus dignissimos exercitationem corporis repellendus facilis sint tempora ratione officiis perferendis, blanditiis voluptates minus ex optio labore provident asperiores eum similique rerum quia voluptate. Molestias sint quod, suscipit, laudantium reprehenderit dolorem aliquid iusto illum illo est aliquam tempore.</p>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="grid grid-cols-12">
+          <div class="col-span-12 lg:col-span-10 overflow-x-hidden">
+            <p>{item[0].news_contents}</p>
+         
+          </div>
+        </div>
+      </div>
     </div>
-   
-</main>
+  </main>
 </Layout>

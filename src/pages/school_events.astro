@@ -1,83 +1,68 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Calendar from '@/components/calendar'
-import { format, parseISO } from "date-fns"
+import Layout from "@/layouts/Layout.astro";
+import Calendar from "@/components/calendar";
+import { format, parseISO } from "date-fns";
 
-
-
-const events = [
-    {
-        id: 1,
-        name: 'Leslie Alexander',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        startDatetime: '2024-11-08T13:00',
-        endDatetime: '2024-11-08T14:30',
-    },
-    {
-        id: 2,
-        name: 'Michael Foster',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        startDatetime: '2024-11-20T09:00',
-        endDatetime: '2024-11-20T11:30',
-    },
-    {
-        id: 3,
-        name: 'Dries Vincent',
-        imageUrl:
-            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        startDatetime: '2024-11-20T17:00',
-        endDatetime: '2024-11-20T18:30',
-    },
-    {
-        id: 4,
-        name: 'Leslie Alexander',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        startDatetime: '2024-11-09T13:00',
-        endDatetime: '2024-11-09T14:30',
-    },
-    {
-        id: 5,
-        name: 'Michael Foster',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        startDatetime: '2024-11-13T14:00',
-        endDatetime: '2024-11-13T14:30',
-    },
-]
+const fetchschoolEventsDatas = async () => {
+  const response = await fetch("http://localhost:3000/school-events");
+  const data = await response.json();
+  return data;
+};
+const events = await fetchschoolEventsDatas();
+// type Event = {
+//   event_id: number;
+//   title: string;
+//   description: string;
+//   location: string;
+//   start_datetime: string;
+//   end_datetime: string;
+//   related_news_url: string;
+//   is_public: boolean;
+//   is_cancelled: boolean;
+//   created_at: string;
+//   updated_at: string;
+// }
+console.log(events);
 ---
 
 <Layout title="学校行事">
-    <main class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20 ">
-        <Calendar events={events} client:load></Calendar>
-       
-        <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
-        <ol class="grid py-2 lg:pb-20 grid-cols-1 max-w-screen-xl">
-            {events.map((event) => (
-				<div class="col-span-10 [&_a]:last:border-none">
-				<a href='#' class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b">
-                    <time datetime={event.startDatetime} class="lg:col-span-3 text-xs min-w-fit">
-                                {format(parseISO(event.startDatetime), 'EEE, d MMM')}
-                    </time>
-					<div class="lg:col-span-7 w-full">
-						<h3 class="text-foreground text-sm lg:text-base group-hover:underline ">{event.name}</h3>
-					</div>
-					<div class="lg:col-span-2 flex justify-start text-xs lg:mt-0 w-full">
-                        <p class="mt-0.5 lg:ml-20">
-                            <time datetime={event.startDatetime} >
-                                {format(parseISO(event.startDatetime), 'h:mm a')}
-                            </time>{' '}
-                            -{' '}
-                            <time datetime={event.endDatetime}>
-                                {format(parseISO(event.endDatetime), 'h:mm a')}
-                            </time>
-                        </p>
-					</div>
-				</a>
-			</div>
-			))}	
-        </ol>
-    </main>
+  <main class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20">
+    <Calendar events={events} client:load />
+    <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
+    <ol class="grid py-2 lg:pb-20 grid-cols-1 max-w-screen-xl">
+      {
+        events.map((event: any) => (
+          <div class="col-span-10 [&_a]:last:border-none">
+            <a
+              href="#"
+              class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b"
+            >
+              <time
+                datetime={event.start_datetime}
+                class="lg:col-span-3 text-xs min-w-fit"
+              >
+                {format(parseISO(event.start_datetime), "EEE, d MMM")}
+              </time>
+              <div class="lg:col-span-7 w-full">
+                <h3 class="text-foreground text-sm lg:text-base group-hover:underline ">
+                  {event.title}
+                </h3>
+              </div>
+              <div class="lg:col-span-2 flex justify-start text-xs lg:mt-0 w-full">
+                <p class="mt-0.5 lg:ml-20">
+                  <time datetime={event.start_datetime}>
+                    {format(parseISO(event.start_datetime), "h:mm a")}
+                  </time>{" "}
+                  -{" "}
+                  <time datetime={event.end_datetime}>
+                    {format(parseISO(event.end_datetime), "h:mm a")}
+                  </time>
+                </p>
+              </div>
+            </a>
+          </div>
+        ))
+      }
+    </ol>
+  </main>
 </Layout>

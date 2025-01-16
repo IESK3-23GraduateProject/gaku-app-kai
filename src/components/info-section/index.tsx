@@ -3,12 +3,19 @@ import { useStore } from "@nanostores/react";
 import { getFilteredItems, searchQuery, selectedCategory, sortOption } from "@/lib/newsSearchStore";
 
 interface NewsItem {
-    postId: number;
+    student_news_id: number;
     title: string;
-    description: string;
-    category: string;
-    date: string;
-}
+    news_category_name: string;
+    news_contents: string;
+    author_name: string;
+    is_public:boolean;
+    high_priority:boolean;
+    publish_at:string;
+    created_at:string;
+    updated_at:string;
+    read_at:string;
+    is_read:boolean;
+  }
 
 interface InfoSectionProps {
     items: NewsItem[];
@@ -34,11 +41,11 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item) => (
                         <div
-                            key={item.postId} // Unique key for each item
+                            key={item.student_news_id} // Unique key for each item
                             className="col-span-10 px-2 sm:px-4 [&_a]:last:border-none"
                         >
                             <a
-                                href={`/news/${item.postId}`}
+                                href={`/news/${item.student_news_id}`}
                                 className="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b"
                             >
                                 <div className="lg:col-span-9 px-2">
@@ -46,17 +53,17 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                                         {item.title}
                                     </h3>
                                     <p className="hidden lg:block text-xs text-muted-foreground mt-2 max-w-xl">
-                                        {item.description}
+                                        {item.news_contents}
                                     </p>
                                 </div>
                                 <div className="lg:col-span-3 flex justify-start gap-1 w-full text-xs mt-2 lg:mt-0">
                                     <div className="text-foreground-lighter group-hover:text-foreground-light min-w-fit">
                                         <div className="inline-flex items-center whitespace-nowrap rounded-full bg-opacity-10 bg-surface-200 text-foreground-light border border-strong px-2.5 py-0.5 text-xs group-hover:border-foreground-muted capitalize">
-                                            {item.category}
+                                            {item.news_category_name}
                                         </div>
                                     </div>
                                     <p className="text-foreground-lighter group-hover:text-foreground-light whitespace-nowrap lg:ml-auto">
-                                        {item.date}
+                                        {item.publish_at}
                                     </p>
                                 </div>
                             </a>
