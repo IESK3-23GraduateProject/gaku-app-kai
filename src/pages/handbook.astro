@@ -7,16 +7,24 @@ import { ViewTransitions } from "astro:transitions";
 <Layout title="HANDBOOK">
   <main class="justify-center items-center h-screen text-center">
     <head><ViewTransitions /></head>
-    <a href="/hadbook_a.pdf" data-astro-reload>学則・ルールについて</a><br /><hr
+    <p>
+      <a href="/hadbook_a.pdf" data-astro-reload>学則・ルールについて</a>
+    </p><hr />
+
+    <p>
+      <a href="/hadbook_b.pdf" data-astro-reload>資格検定試験スケジュール</a>
+    </p><hr />
+
+    <p><a href="/hadbook_c.pdf" data-astro-reload>学生向け情報</a></p><hr />
+
+    <p><a href="/hadbook_d.pdf" data-astro-reload>校舎案内図</a></p><hr />
+
+    <p><a href="/hadbook_e.pdf" data-astro-reload>ECC Local Guide Map</a></p><hr
     />
-    <a href="/hadbook_b.pdf" data-astro-reload>資格検定試験スケジュール</a><br
-    /><hr />
-    <a href="/hadbook_c.pdf" data-astro-reload>学生向け情報</a><br /><hr />
-    <a href="/hadbook_d.pdf" data-astro-reload>校舎案内図</a><br /><hr />
-    <a href="/hadbook_e.pdf" data-astro-reload>ECC Local Guide Map</a><br /><hr
-    />
-    <a href="/hadbook_f.pdf" data-astro-reload>連絡窓口</a><br /><hr />
-    <a href="/hadbook_g.pdf" data-astro-reload>留学生HANDBOOK2024</a><br /><hr
+
+    <p><a href="/hadbook_f.pdf" data-astro-reload>連絡窓口</a></p><hr />
+
+    <p><a href="/hadbook_g.pdf" data-astro-reload>留学生HANDBOOK2024</a></p><hr
     />
   </main>
 </Layout>
@@ -30,12 +38,18 @@ import { ViewTransitions } from "astro:transitions";
   hr {
     border-width: 1.5px 0 0 0;
     border-style: dashed;
-    border-color: gray;
+    border-color: rgb(200, 200, 200);
     margin-top: 15px;
     margin-bottom: 15px;
   }
   .br {
     display: none;
+  }
+  p {
+    text-align: left;
+  }
+  a:hover {
+    color: rgb(159, 239, 239);
   }
 
   @media screen and (max-width: 636px) {
