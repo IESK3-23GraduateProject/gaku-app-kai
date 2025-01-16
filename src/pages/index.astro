@@ -1,13 +1,110 @@
 ---
-import { Button } from '@/components/ui/button';
+import DesktopSearchBar from '@/components/info-search/desktop';
 import Layout from '../layouts/Layout.astro';
-import '@/styles/globals.css'
+import MobileSearchBar from '@/components/info-search/mobile'
+
+const items = [
+    {
+      postId:1,
+      title: "【キャリアセンター】求人情報プリント発行します(8/26発行）",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "キャリアセンターより",
+      date: "2024年10月27日"
+    },
+    {
+      postId:2,
+      title: "【キャリアセンター】8/10（土）～8/20（火）はお休みです",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "キャリアセンターより",
+      date: "2024年10月27日"
+    },
+	{
+    postId:3,
+      title: "学校休館期間・先生の出勤のお知らせ",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    },
+	{
+      postId:4,
+      title: "「外国人留学生の滞在に伴う家族等の渡日状況アンケート調査」への協力のお願い",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "その他",
+      date: "2024年10月27日"
+    },
+	{
+    postId:5,
+      title: "TOEICの問題集を図書室に置きました",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "図書館からの連絡",
+      date: "2024年10月27日"
+    },
+	{   
+    postId:5,
+      title: "学年混合ゲーム制作イベントGameIndustriesJamを学生主体で開催！",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    },
+	{
+      postId:6,
+      title: "ピアスッタフ募集！！",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    },
+	{
+      postId:7,
+      title: "夏期選択講座 受講許可一覧",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    },
+	{
+      postId:8,
+      title: "保健室・学生相談室だより【夏号】",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    },
+	{   
+      postId:9,
+      title: "近隣のマンションから苦情がきています。",
+      description: "Explore alternatives to MongoDB Realm and learn how Supabase provides powerful solutions for device synchronization and real-time database capabilities.",
+      category: "学校からの連絡",
+      date: "2024年10月27日"
+    }
+  ];
+  
 ---
 
-<Layout title="Welcome to Astro.">
-	<main class="flex justify-center items-center h-screen">
-		<Button>Hello World</Button>
-		<Button>Hello World2</Button>
-
+<Layout title="ホーム">
+	<main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen">
+		<DesktopSearchBar client:load></DesktopSearchBar>
+		<MobileSearchBar client:load></MobileSearchBar>
+		<ol class="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
+			{items.map((item) => (
+				<div class="col-span-10 px-2 sm:px-4 [&_a]:last:border-none">
+				<a href={`/news/${item.postId}`} class="group flex flex-col lg:grid lg:grid-cols-12 w-full py-2 sm:py-4 h-full border-b ">
+					<div class="lg:col-span-9 px-2">
+						<h3 class="text-foreground text-sm lg:text-base group-hover:underline ">{item.title}</h3>
+						<p class="hidden lg:block text-xs text-muted-foreground mt-2 max-w-xl">
+                            {item.description}
+                        </p> 
+					</div>
+					<div class="lg:col-span-3 flex justify-start gap-1 w-full text-xs mt-2 lg:mt-0">
+    					<div class="text-foreground-lighter group-hover:text-foreground-light min-w-fit">
+        					<div class="inline-flex items-center whitespace-nowrap rounded-full bg-opacity-10 bg-surface-200 text-foreground-light border border-strong px-2.5 py-0.5 text-xs group-hover:border-foreground-muted capitalize">
+            					{item.category}
+        					</div>    
+    					</div>
+   						 <p class="text-foreground-lighter group-hover:text-foreground-light whitespace-nowrap lg:ml-auto ">
+        					{item.date}
+    					</p>
+					</div>
+				</a>
+			</div>
+			))}	
+		</ol>
 	</main>
 </Layout>
