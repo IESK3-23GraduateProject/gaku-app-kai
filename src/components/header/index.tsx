@@ -8,11 +8,6 @@ export default function Header({ title }: { title: string }) {
     const toggleMenu = () => setIsOpen(!isOpen);
     const menuItems = [
         {
-            title: "ホーム",
-            url: "/",
-            icon: Home,
-        },
-        {
             title: "お知らせ",
             url: "#",
             icon: Inbox,
