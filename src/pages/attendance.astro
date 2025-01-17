@@ -1,0 +1,63 @@
+---
+import SubjectAttendance from "@/components/attendance/index";
+import Layout from "../layouts/Layout.astro";
+import "@/styles/globals.css";
+
+const data = [
+  {
+    id: 1,
+    subject: "AIシステム開発演習 I",
+    attendanceRate: "90%",
+    credit: 4,
+    term: "2024年度 後期",
+    requiredAttendanceRate: "75%",
+  },
+  {
+    id: 2,
+    subject: "AWSクラウド演習 II",
+    attendanceRate: "96%",
+    credit: 4,
+    term: "2024年度 後期",
+    requiredAttendanceRate: "75%",
+  },
+  {
+    id: 3,
+    subject: "卒業制作演習（IT）",
+    attendanceRate: "95%",
+    credit: 14,
+    term: "2024年度 後期",
+    requiredAttendanceRate: "75%",
+  },
+  {
+    id: 4,
+    subject: "ITゼミ演習 II",
+    attendanceRate: "91%",
+    credit: 6,
+    term: "2024年度 後期",
+    requiredAttendanceRate: "75%",
+  },
+];
+---
+
+<Layout title="出席">
+  <main
+    class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen"
+  >
+    <div class="bg-blue-500 text-white p-4 rounded-md mb-6">
+      <h2 class="text-lg font-bold">科目別見込出席率</h2>
+      <ul class="text-sm space-y-2 mt-2">
+        <li>
+          ※見込出席率：以後の授業を全て出席と仮定し計算（小数点以下切り捨て） →
+          見込出席数 / 授業予定回数
+        </li>
+        <li>※遅刻3回分を欠席1回として扱います</li>
+        <li>
+          ※出席率が単位認定限度出席率に満たない場合、その科目は単位不認定とする
+        </li>
+        <li>※見込出席数 = 授業予定回数 - (欠席回数 + 遅刻回数を3で割った商)</li>
+      </ul>
+    </div>
+
+    <SubjectAttendance data={data} />
+  </main>
+</Layout>

@@ -9,32 +9,37 @@ export default function Header({ title }: { title: string }) {
     const menuItems = [
         {
             title: "ホーム",
-            url: "/",
+            url: "home",
             icon: Home,
         },
         {
             title: "お知らせ",
-            url: "#",
+            url: "/",
             icon: Inbox,
         },
         {
             title: "学校行事",
-            url: "/school_events",
+            url: "school_events",
             icon: Calendar,
         },
         {
             title: "出席状態確認",
-            url: "/absent_forms",
+            url: "attendance",
+            icon: BookOpen,
+        },
+        {
+            title: "欠席届",
+            url: "absent_forms",
             icon: BookOpen,
         },
         {
             title: "HANDBOOK",
-            url: "#",
+            url: "handbook",
             icon: NotebookPen,
         },
         {
             title: "理念",
-            url: "/philosophy",
+            url: "philosophy",
             icon: Sprout,
         },
         {
@@ -44,12 +49,12 @@ export default function Header({ title }: { title: string }) {
         },
         {
             title: "リンク集",
-            url: "#",
+            url: "listpage",
             icon: Link,
         },
         {
             title: "教職員図鑑",
-            url: "#",
+            url: "teacher",
             icon: Users,
         },
     ]
