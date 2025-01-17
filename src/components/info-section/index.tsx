@@ -95,16 +95,17 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                 className="group flex flex-col lg:flex-row w-full py-2 sm:py-4"
               >
                 <div className="flex-1 lg:pr-4">
-                  <div className="flex items-start gap-2">
+                  <h3 className="text-lg font-semibold group-hover:underline leading-snug">
                     {!item.is_read && (
-                      <span className="flex-shrink-0 px-2 py-0.5 bg-green-500 text-white text-xs font-medium rounded-full">
-                        new!
-                      </span>
+                      <div className="relative inline-block mr-2 align-middle">
+                        {/* Ping Effect */}
+                        {/* <span className="absolute inset-0 flex h-3 w-3 rounded-full bg-green-500 opacity-75 "></span> */}
+                        {/* Circle */}
+                        <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
+                      </div>
                     )}
-                    <h3 className="text-lg font-semibold group-hover:underline leading-snug">
-                      {item.title}
-                    </h3>
-                  </div>
+                    {item.title}
+                  </h3>
                   <p className="mt-2 text-sm text-gray-600 hidden lg:block">
                     {truncateContent(item.news_contents)}
                   </p>
@@ -118,7 +119,7 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                     {item.news_category_name}
                   </span>
                   {item.high_priority && (
-                    <span className="text-red-600 font-bold text-xs">必須</span>
+                    <span className="text-red-600 font-bold text-base">必須</span>
                   )}
                   <span className="text-sm text-gray-500">
                     {formatDate(item.publish_at)}
