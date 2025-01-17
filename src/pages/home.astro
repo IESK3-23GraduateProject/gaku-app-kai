@@ -1,0 +1,40 @@
+---
+import DesktopSearchBar from "@/components/info-search/desktop";
+import Layout from "../layouts/Layout.astro";
+import MobileSearchBar from "@/components/info-search/mobile";
+import InfoSection from "@/components/info-section";
+import { Item } from "@radix-ui/react-select";
+
+interface NewsItem {
+  student_news_id: number;
+  title: string;
+  news_category_name: string;
+  news_contents: string;
+  author_name: string;
+  is_public: boolean;
+  high_priority: boolean;
+  publish_at: string;
+  created_at: string;
+  updated_at: string;
+  read_at: string;
+  is_read: boolean;
+}
+
+const fetchStudentNewsDatas = async () => {
+  const response = await fetch("http://localhost:3000/student-news");
+  const data = await response.json();
+  return data;
+};
+const item = await fetchStudentNewsDatas();
+
+---
+
+<Layout title="ホーム">
+  <main
+    class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen max-w-screen-2xl w-full"
+  >
+    <DesktopSearchBar client:load />
+    <MobileSearchBar client:load />
+    <InfoSection client:load items={item} />
+  </main>
+</Layout>
