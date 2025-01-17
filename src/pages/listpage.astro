@@ -5,31 +5,95 @@ import "@/styles/globals.css";
 
 <Layout title="link集" />
 <main class="justify-center items-center h-screen text-center">
-  <a href="http://anpi.ecc.ac.jp/">安否確認サイト</a><br />
-  <a href="https://comp.ecc.ac.jp/about/self_evaluation/"
-    >コース・学年別カリキュラム/必修科目・公開シラバス</a
-  ><br />
-  <a href="https://gea.ecc.ac.jp/">global education awards</a><br />
-  <a href="https://ecc-archive.com/">focus</a><br />
-  <a href="https://npo.ecc.ac.jp/">ECC社会貢献・国際交流センター</a><br />
-  <ul>
-    学園サロン
-    <li>
+  <p><a href="http://anpi.ecc.ac.jp/">安否確認サイト</a><hr /></p>
+
+  <p>
+    <a href="https://comp.ecc.ac.jp/about/self_evaluation/"
+      >コース・学年別カリキュラム/必修科目・公開シラバス</a
+    ><hr />
+  </p>
+
+  <p><a href="https://gea.ecc.ac.jp/">global education awards</a><hr /></p>
+
+  <p><a href="https://ecc-archive.com/">focus</a><hr /></p>
+
+  <p>
+    <a href="https://npo.ecc.ac.jp/">ECC社会貢献・国際交流センター</a><hr />
+  </p>
+
+  <details class="accordion">
+    <summary>学園サロン</summary>
+    <p>
       <a href="https://hello.ecc.ac.jp/salon/hair/"
         >美容サロン「アンベリール」</a
       >
-    </li>
-    <li><a href="https://salon.ecc.ac.jp/lapua/">ネイルサロン「ラプア」</a></li>
-    <li>
-      <a href="https://salon.ecc.ac.jp/malie/">エステサロン「マーリエ」</a>
-    </li>
-  </ul>
-  <ul>
-    キャリアセンター
-    <li>
+    </p>
+    <p>
+      <a href="https://salon.ecc.ac.jp/lapua/">ネイルサロン「ラプア」</a>
+    </p>
+    <p>
+      <a href="https://salon.ecc.ac.jp/mape/">エステサロン「マーリエ」</a>
+    </p>
+  </details><hr />
+
+  <details class="accordion">
+    <summary>キャリアセンター</summary>
+    <p>
       <a href="https://airrsv.net/ccsmensetsu/calendar">模擬面接予約サイト</a>
-    </li>
-    <li><a href="https://www.careermap.jp/users/sign_in">キャリアマップ</a></li>
-    <li><a href="https://lines-spi.education.ne.jp/compecc/">SPIドリル</a></li>
-  </ul>
+    </p>
+    <p>
+      <a href="https://www.careermap.jp/users/sign_in">キャリアマップ</a>
+    </p>
+    <p>
+      <a href="https://pnes-spi.education.ne.jp/compecc/">SPIドリル</a>
+    </p>
+  </details><hr />
 </main>
+
+<style>
+  main {
+    margin-top: 60px;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: left;
+  }
+  hr {
+    border-width: 1.5px 0 0 0;
+    border-style: dashed;
+    border-color: rgb(200, 200, 200);
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .hr {
+    display: none;
+  }
+  a:hover {
+    color: rgb(159, 239, 239);
+  }
+
+  .accordion summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .accordion summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion summary::after {
+    content: "+";
+    font-size: 1.4em;
+    position: absolute;
+    right: 7%;
+  }
+  .accordion[open] summary::after {
+    content: "-";
+  }
+  .accordion p {
+    margin-top: 5px;
+  }
+
+  @media screen and (max-width: 636px) {
+    .hr {
+      display: block;
+    }
+  }
+</style>
