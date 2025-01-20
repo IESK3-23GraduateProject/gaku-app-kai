@@ -1,0 +1,43 @@
+---
+import "@/styles/globals.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro App" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zen+Kaku+Gothic+Antique&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="mx-auto bg-sky-200">
+    <!-- Header -->
+    <header class="bg-sky-500 text-white text-center py-4">
+      <h1 class="text-2xl font-bold">ECCコンピュータ専門学校</h1>
+      <p class="text-lg mt-1">GakuAppKai</p>
+    </header>
+
+    <!-- Page Content -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-sky-500 text-white text-center py-2">
+      <p class="text-sm">Copyright © Yamaguchi Gakuen. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
