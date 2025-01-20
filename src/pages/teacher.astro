@@ -1,9 +1,52 @@
 ---
-import Layout from "../layouts/Layout.astro"
+import Layout from "../layouts/Layout.astro";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
+const teachers = [
+  {
+    name: "田中 太郎",
+    title: "IT 開発専門講師",
+    image: "/src/components/img/teacher1.png",
+  },
+  {
+    name: "佐藤 花子",
+    title: "マルチメディア研究主任",
+    image: "/src/components/img/teacher2.png",
+  },
+  {
+    name: "山田 一郎",
+    title: "AI システム講師",
+    image: "/src/components/img/teacher3.png",
+  },
+  {
+    name: "鈴木 美咲",
+    title: "デザイン学科講師",
+    image: "/src/components/img/teacher4.png",
+  },
+];
 ---
 
-<Layout title="教員図鑑">
-    <main>
-        <h1>teacher</h1>
-    </main>
+<Layout title="教職員図鑑">
+  <main class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen">
+    <h1 class="text-lg font-bold mb-6">教職員図鑑</h1>
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {teachers.map((teacher) => (
+        <Card class="shadow-md rounded-lg">
+          <CardHeader class="p-0 relative">
+            <img
+              src={teacher.image}
+              alt={teacher.name}
+              class="rounded-t-lg w-full h-48 object-cover"
+            />
+          </CardHeader>
+          <CardContent class="p-4">
+            <CardTitle class="text-lg font-bold">{teacher.name}</CardTitle>
+            <CardDescription class="text-sm text-gray-600">
+              {teacher.title}
+            </CardDescription>
+          </CardContent>
+        </Card>
+      ))}
+    </section>
+  </main>
 </Layout>
