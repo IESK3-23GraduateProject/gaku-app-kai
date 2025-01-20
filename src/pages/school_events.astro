@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Calendar from "@/components/calendar";
 import { format, parseISO } from "date-fns";
+import { ja } from "date-fns/locale";
 
 const fetchschoolEventsDatas = async () => {
   const response = await fetch("http://localhost:3000/school-events");
@@ -9,26 +10,12 @@ const fetchschoolEventsDatas = async () => {
   return data;
 };
 const events = await fetchschoolEventsDatas();
-// type Event = {
-//   event_id: number;
-//   title: string;
-//   description: string;
-//   location: string;
-//   start_datetime: string;
-//   end_datetime: string;
-//   related_news_url: string;
-//   is_public: boolean;
-//   is_cancelled: boolean;
-//   created_at: string;
-//   updated_at: string;
-// }
-console.log(events);
 ---
 
 <Layout title="学校行事">
   <main class="mt-12 container mx-auto p-4 md:py-8 xl:py-10 sm:px-16 xl:px-20">
     <Calendar events={events} client:load />
-    <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
+    <h2 class="font-semibold text-gray-900">今後のイベント</h2>
     <ol class="grid py-2 lg:pb-20 grid-cols-1 max-w-screen-xl">
       {
         events.map((event: any) => (
@@ -41,21 +28,21 @@ console.log(events);
                 datetime={event.start_datetime}
                 class="lg:col-span-3 text-xs min-w-fit"
               >
-                {format(parseISO(event.start_datetime), "EEE, d MMM")}
+                {format(parseISO(event.start_datetime), "yyyy年M月d日 (EEE)", { locale: ja })}
               </time>
               <div class="lg:col-span-7 w-full">
-                <h3 class="text-foreground text-sm lg:text-base group-hover:underline ">
+                <h3 class="text-foreground text-sm lg:text-base group-hover:underline">
                   {event.title}
                 </h3>
               </div>
               <div class="lg:col-span-2 flex justify-start text-xs lg:mt-0 w-full">
                 <p class="mt-0.5 lg:ml-20">
                   <time datetime={event.start_datetime}>
-                    {format(parseISO(event.start_datetime), "h:mm a")}
-                  </time>{" "}
-                  -{" "}
+                    {format(parseISO(event.start_datetime), "HH:mm", { locale: ja })}
+                  </time>
+                  - 
                   <time datetime={event.end_datetime}>
-                    {format(parseISO(event.end_datetime), "h:mm a")}
+                    {format(parseISO(event.end_datetime), "HH:mm", { locale: ja })}
                   </time>
                 </p>
               </div>
