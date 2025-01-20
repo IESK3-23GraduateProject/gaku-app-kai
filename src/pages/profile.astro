@@ -1,0 +1,110 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const userInfo = {
+  school: "ECCコンピュータ専門学校",
+  studentId: "2220123",
+  name: "John Doe",
+  kanaName: "ジョーン ドー",
+  department: "マルチメディア研究",
+  course: "IT開発研究",
+  major: "-",
+  hrClass: "SK3A",
+  email: "2220123@ecc.ac.jp",
+};
+---
+
+<Layout title="学生情報">
+  <main
+    class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen"
+  >
+    <div class="bg-blue-500 text-white text-center py-4 rounded-md shadow-md">
+      <h1 class="text-2xl font-bold">学生情報</h1>
+      <p class="text-sm">個人に関する情報とポータルに関する情報</p>
+    </div>
+
+    <div class="container mx-auto my-6 space-y-6">
+      <!-- Academic Info Section -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-lg font-bold mb-4">学籍情報</h2>
+        <dl class="space-y-4 text-gray-700">
+          <div class="flex justify-between">
+            <dt class="font-semibold">学校</dt>
+            <dd>{userInfo.school}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">学籍番号</dt>
+            <dd>{userInfo.studentId}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">名前</dt>
+            <dd>{userInfo.name}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">名前（カナ）</dt>
+            <dd>{userInfo.kanaName}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">学科</dt>
+            <dd>{userInfo.department}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">コース</dt>
+            <dd>{userInfo.course}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">専攻</dt>
+            <dd>{userInfo.major}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-semibold">HRクラス</dt>
+            <dd>{userInfo.hrClass}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Student Survey Button -->
+      <div
+        class="bg-white text-center"
+      >
+        <a
+          href="https://enq.ecc-sv.com/student/"
+          target="_blank"
+          class="px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white font-bold rounded-full hover:from-blue-500 hover:to-blue-600 transition duration-200"
+        >
+          学生アンケートへ
+        </a>
+      </div>
+
+      <!-- Contact Info Section -->
+      <div
+        class="bg-white shadow-md rounded-lg p-6 flex justify-between items-center"
+      >
+        <div>
+          <h2 class="text-lg font-bold">連絡先情報</h2>
+          <p class="mt-2 text-gray-700">{userInfo.email}</p>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div
+        class="bg-white shadow-md rounded-lg p-6 flex justify-between items-center"
+      >
+        <div>
+          <h2 class="text-lg font-bold">パスワード</h2>
+          <p class="text-sm text-gray-500">
+            安全なパスワードを使用してください
+          </p>
+        </div>
+        <div>
+          <a
+            href="/change-password"
+            class="inline-flex items-center text-blue-500 hover:text-blue-600 transition duration-200"
+          >
+            &gt;
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
