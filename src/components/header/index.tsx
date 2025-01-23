@@ -23,6 +23,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import NotificationBar from "./notificationBar";
 
 export default function Header({ title }: { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ export default function Header({ title }: { title: string }) {
   const menuItems = [
     {
       title: "ホーム",
-      url: "home",
+      url: "/home",
       icon: Home,
     },
     {
@@ -41,47 +42,47 @@ export default function Header({ title }: { title: string }) {
     },
     {
       title: "学校行事",
-      url: "school_events",
+      url: "/school_events",
       icon: Calendar,
     },
     {
       title: "出席状態確認",
-      url: "attendance",
+      url: "/attendance",
       icon: Laptop2,
     },
     {
       title: "欠席届",
-      url: "absent_forms",
+      url: "/absent_forms",
       icon: BookOpen,
     },
     {
       title: "HANDBOOK",
-      url: "handbook",
+      url: "/handbook",
       icon: NotebookPen,
     },
     {
       title: "理念",
-      url: "philosophy",
+      url: "/philosophy",
       icon: Sprout,
     },
     {
       title: "連絡先",
-      url: "address",
+      url: "/address",
       icon: Phone,
     },
     {
       title: "リンク集",
-      url: "listpage",
+      url: "/listpage",
       icon: Link,
     },
     {
       title: "教職員図鑑",
-      url: "teacher",
+      url: "/teacher",
       icon: Users,
     },
     {
       title: "プロファイル",
-      url: "profile",
+      url: "/profile",
       icon: SquareUser,
     },
     {
@@ -132,9 +133,10 @@ export default function Header({ title }: { title: string }) {
           <span className="text-sm font-bold p-2">{title}</span>
         </div>
         {/* ECC Logo */}
-        <div className="flex-shrink-0">
+        <div className="flex items-center gap-4">
+          <NotificationBar />
           <img
-            src="/src/components/img/ECClogo.png" // Update the path based on your project structure
+            src="/src/components/img/ECClogo.png"
             alt="ECC Logo"
             className="h-8 w-8 rounded-md"
           />
