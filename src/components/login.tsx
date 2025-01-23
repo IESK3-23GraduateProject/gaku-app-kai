@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
 export default function LoginComponent() {
-  const [status, setStatus] = useState<"loading" | "success" | "greeting" | null>(null);
+  const [status, setStatus] = useState<
+    "loading" | "success" | "greeting" | null
+  >(null);
   const [username, setUsername] = useState("");
   const [logoutSuccess, setLogoutSuccess] = useState(false);
 
@@ -21,31 +23,96 @@ export default function LoginComponent() {
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Get the UserId input value
-    const userId = (e.target as any).UserId.value;
-    setUsername(userId);
+    // Get User ID and Password input values
+    const formData = new FormData(e.target as HTMLFormElement);
+    const userId = formData.get("UserId") as string;
+    const pass = formData.get("pass") as string;
 
-    // Start the loading process
     setStatus("loading");
 
-    // Simulate login process
-    setTimeout(() => {
-      setStatus("success");
+    try {
+      // Send data to the login API
+      const response = await fetch("http://localhost:3000/login/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, pass }),
+      });
 
-      // After 1 second, show the greeting
-      setTimeout(() => {
-        setStatus("greeting");
+      const data = await response.json();
 
-        // After 2 seconds, redirect to /
+      if (data.success) {
+        console.log(data);
+        // Store user data in localStorage with session expiration
+        const sessionExpiration = new Date().getTime() + 30 * 60 * 1000; // 30 minutes from now
+        const sessionData = { userId, sessionExpiration };
+
+        localStorage.setItem("userSession", JSON.stringify(sessionData));
+        localStorage.setItem("userData", JSON.stringify(data.data[0]));
+
+        // Retrieve userData from localStorage
+        const storedUserData = localStorage.getItem("userData");
+
+        if (storedUserData) {
+          // Parse the userData JSON string and extract user_name
+          const userData = JSON.parse(storedUserData);
+          setUsername(userData.user_name);
+        }
+        setStatus("success");
+
+        // Debugging info
+        console.debug("Login successful:", data);
+
+        // After 1 second, show greeting
         setTimeout(() => {
-          window.location.href = "/";
-        }, 2000);
-      }, 1000);
-    }, 1500); // Simulated loading time
+          setStatus("greeting");
+
+          // After 2 seconds, redirect to the homepage
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 2000);
+        }, 1000);
+      } else {
+        setStatus(null);
+        alert(
+          data.message || "ログインに失敗しました。もう一度お試しください。"
+        );
+
+        // Debugging info
+        console.error("Login failed:", data);
+      }
+    } catch (error) {
+      setStatus(null);
+      alert("ログインエラーが発生しました。ネットワークを確認してください。");
+
+      // Debugging info
+      console.error("Login error:", error);
+    }
   };
+
+  // Session management: check if session has expired
+  useEffect(() => {
+    const sessionData = localStorage.getItem("userSession");
+    if (sessionData) {
+      const { sessionExpiration } = JSON.parse(sessionData);
+      const currentTime = new Date().getTime();
+
+      if (currentTime > sessionExpiration) {
+        // Session expired
+        localStorage.removeItem("userSession");
+        alert(
+          "セッションの有効期限が切れました。もう一度ログインしてください。"
+        );
+        window.location.href = "/login"; // Redirect to login page
+      } else {
+        console.debug("Session is still valid.");
+      }
+    }
+  }, []);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -66,21 +133,32 @@ export default function LoginComponent() {
             </div>
           )}
           {status === "success" && (
-            <p className="text-2xl font-bold text-green-500 animate-fade">ログインを成功しました</p>
+            <p className="text-2xl font-bold text-green-500 animate-fade">
+              ログインを成功しました
+            </p>
           )}
           {status === "greeting" && (
-            <p className="text-2xl font-bold text-blue-600 animate-fade">こんにちは、{username} さん</p>
+            <p className="text-2xl font-bold text-blue-600 animate-fade">
+              こんにちは、{username} さん
+            </p>
           )}
         </div>
       )}
 
       {/* Login Form */}
-      <div className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${status ? "hidden" : ""}`}>
-        <h2 className="text-sky-600 text-center text-2xl font-bold mb-6">ECC学生アプリ2.0</h2>
+      <div
+        className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${status ? "hidden" : ""}`}
+      >
+        <h2 className="text-sky-600 text-center text-2xl font-bold mb-6">
+          ECC学生アプリ2.0
+        </h2>
         <form name="form-login" className="space-y-6" onSubmit={handleSubmit}>
           {/* User ID Field */}
           <div>
-            <label htmlFor="UserId" className="block text-sky-800 font-bold mb-2">
+            <label
+              htmlFor="UserId"
+              className="block text-sky-800 font-bold mb-2"
+            >
               学籍番号(ID)
             </label>
             <input
