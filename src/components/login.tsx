@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
 export default function LoginComponent() {
-  const [status, setStatus] = useState<"loading" | "success" | "greeting" | null>(null);
+  const [status, setStatus] = useState<
+    "loading" | "success" | "greeting" | null
+  >(null);
   const [username, setUsername] = useState("");
   const [logoutSuccess, setLogoutSuccess] = useState(false);
 
@@ -44,13 +46,22 @@ export default function LoginComponent() {
       const data = await response.json();
 
       if (data.success) {
+        console.log(data);
         // Store user data in localStorage with session expiration
         const sessionExpiration = new Date().getTime() + 30 * 60 * 1000; // 30 minutes from now
         const sessionData = { userId, sessionExpiration };
 
         localStorage.setItem("userSession", JSON.stringify(sessionData));
+        localStorage.setItem("userData", JSON.stringify(data.data[0]));
 
-        setUsername(userId);
+        // Retrieve userData from localStorage
+        const storedUserData = localStorage.getItem("userData");
+
+        if (storedUserData) {
+          // Parse the userData JSON string and extract user_name
+          const userData = JSON.parse(storedUserData);
+          setUsername(userData.user_name);
+        }
         setStatus("success");
 
         // Debugging info
@@ -67,7 +78,9 @@ export default function LoginComponent() {
         }, 1000);
       } else {
         setStatus(null);
-        alert(data.message || "ログインに失敗しました。もう一度お試しください。");
+        alert(
+          data.message || "ログインに失敗しました。もう一度お試しください。"
+        );
 
         // Debugging info
         console.error("Login failed:", data);
@@ -91,7 +104,9 @@ export default function LoginComponent() {
       if (currentTime > sessionExpiration) {
         // Session expired
         localStorage.removeItem("userSession");
-        alert("セッションの有効期限が切れました。もう一度ログインしてください。");
+        alert(
+          "セッションの有効期限が切れました。もう一度ログインしてください。"
+        );
         window.location.href = "/login"; // Redirect to login page
       } else {
         console.debug("Session is still valid.");
@@ -118,21 +133,32 @@ export default function LoginComponent() {
             </div>
           )}
           {status === "success" && (
-            <p className="text-2xl font-bold text-green-500 animate-fade">ログインを成功しました</p>
+            <p className="text-2xl font-bold text-green-500 animate-fade">
+              ログインを成功しました
+            </p>
           )}
           {status === "greeting" && (
-            <p className="text-2xl font-bold text-blue-600 animate-fade">こんにちは、{username} さん</p>
+            <p className="text-2xl font-bold text-blue-600 animate-fade">
+              こんにちは、{username} さん
+            </p>
           )}
         </div>
       )}
 
       {/* Login Form */}
-      <div className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${status ? "hidden" : ""}`}>
-        <h2 className="text-sky-600 text-center text-2xl font-bold mb-6">ECC学生アプリ2.0</h2>
+      <div
+        className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${status ? "hidden" : ""}`}
+      >
+        <h2 className="text-sky-600 text-center text-2xl font-bold mb-6">
+          ECC学生アプリ2.0
+        </h2>
         <form name="form-login" className="space-y-6" onSubmit={handleSubmit}>
           {/* User ID Field */}
           <div>
-            <label htmlFor="UserId" className="block text-sky-800 font-bold mb-2">
+            <label
+              htmlFor="UserId"
+              className="block text-sky-800 font-bold mb-2"
+            >
               学籍番号(ID)
             </label>
             <input

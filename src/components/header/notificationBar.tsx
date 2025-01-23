@@ -16,17 +16,34 @@ type Notification = {
 export default function NotificationBar() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchStudentNewsData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/student-mentions`);
+        // Retrieve user data from localStorage
+        const storedUserData = localStorage.getItem("userData");
+        if (!storedUserData) {
+          setError("User data not found. Please log in.");
+          return;
+        }
+
+        const userData = JSON.parse(storedUserData);
+        const userId = userData.student_user_id;
+
+        // Fetch notifications for the user
+        const response = await fetch(`http://localhost:3000/student-mentions?userId=${userId}`);
+        if (!response.ok) throw new Error("Failed to fetch notifications");
+
         const data: Notification[] = await response.json();
         setNotifications(data);
+
+        // Count unread notifications
         const unread = data.filter((notification) => !notification.is_mention_read).length;
         setUnreadCount(unread);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching notifications:", error);
+        setError(error.message || "Error fetching notifications");
       }
     };
 
@@ -54,7 +71,9 @@ export default function NotificationBar() {
           <div className="p-4">
             <h2 className="text-sm font-semibold mb-2">Notifications</h2>
             <div className="space-y-2">
-              {notifications.length > 0 ? (
+              {error ? (
+                <p className="text-sm text-red-500">{error}</p>
+              ) : notifications.length > 0 ? (
                 notifications.map((notification) => (
                   <div
                     key={notification.student_news_id}
