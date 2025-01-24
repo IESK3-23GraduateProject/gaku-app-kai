@@ -95,6 +95,23 @@ const buttons = [
     <!-- Welcome Section -->
     <UserWelcome client:only="react" /> <!-- Use the hydrated component here -->
 
+    <!-- Recent News Sneak Peek -->
+    <section class="mt-8">
+      <h2 class="text-lg font-bold mb-4">
+        <a href="/">最近のニュース</a>
+      </h2>
+      <InfoSection client:load items={limitedNews} />
+      <div class="bg-white text-center p-1">
+        <a
+          href="/"
+          class="px-5 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white font-bold rounded-md hover:from-blue-500 hover:to-blue-600 transition duration-200"
+        >
+          もっと見る
+        </a>
+      </div>
+      <br>
+    </section>
+
     <!-- Buttons Section -->
     <div class="space-y-4">
       <!-- Absence Notification Button -->
@@ -118,14 +135,6 @@ const buttons = [
         </a>
       </div>
     </div>
-
-    <!-- Recent News Sneak Peek -->
-    <section class="mt-8">
-      <h2 class="text-lg font-bold mb-4">
-        <a href="/">最近のニュース</a>
-      </h2>
-      <InfoSection client:load items={limitedNews} />
-    </section>
 
     <!-- 3x3 Grid Buttons -->
     <section class="mt-8">

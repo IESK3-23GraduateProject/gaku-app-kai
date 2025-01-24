@@ -110,7 +110,7 @@ export default function Header({ title }: { title: string }) {
             <SheetHeader>
               <SheetTitle>メニュー</SheetTitle>
             </SheetHeader>
-            <nav className="flex flex-col space-y-4 mt-4 ">
+            <nav className="flex flex-col space-y-4 mt-4">
               {menuItems.map((item, index) => (
                 <a
                   href={item.url}
@@ -129,17 +129,27 @@ export default function Header({ title }: { title: string }) {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center ">
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
           <span className="text-sm font-bold p-2">{title}</span>
         </div>
-        {/* ECC Logo */}
+        {/* ECC Logo with Hover */}
         <div className="flex items-center gap-4">
           <NotificationBar />
-          <img
-            src="/src/components/img/ECClogo.png"
-            alt="ECC Logo"
-            className="h-8 w-8 rounded-md"
-          />
+          <a
+            href="/profile"
+            className="relative group flex items-center"
+            aria-label="プロファイルへ"
+          >
+            <img
+              src="/src/components/img/ECClogo.png"
+              alt="ECC Logo"
+              className="h-8 w-8 rounded-md"
+            />
+            {/* Hover effect */}
+            <span className="absolute top-full left-1/2 transform -translate-x-1/2 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-4 bg-gray-800 text-white text-xs font-medium px-3 py-1 rounded-md shadow-md transition-all duration-300">
+              プロファイルへ
+            </span>
+          </a>
         </div>
       </div>
     </header>
