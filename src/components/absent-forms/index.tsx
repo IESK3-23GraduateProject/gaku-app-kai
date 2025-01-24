@@ -156,7 +156,7 @@ export const OfficialAbsenseForm = () => {
     <div className="bg-white rounded-lg px-2 pb-8">
       <div className="mb-8">
         <h3 className="text-xl font-semibold mb-1">就職公欠届の申請</h3>
-        <p className="text-gray-500">Submit your job-related absence request</p>
+        <p className="text-gray-500">必ず1週間以内に提出すること</p>
       </div>
       <div className="space-y-6">
         <div className="flex items-center">
