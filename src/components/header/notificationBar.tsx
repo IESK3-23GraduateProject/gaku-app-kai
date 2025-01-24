@@ -82,9 +82,8 @@ export default function NotificationBar() {
                   >
                     <div className="flex items-start gap-2">
                       <CheckCircle
-                        className={`h-5 w-5 ${
-                          notification.is_mention_read ? "text-gray-400" : "text-green-500"
-                        }`}
+                        className={`h-5 w-5 ${notification.is_mention_read ? "text-gray-400" : "text-green-500"
+                          }`}
                       />
                       <div>
                         <h3 className="text-sm font-bold">{notification.title}</h3>

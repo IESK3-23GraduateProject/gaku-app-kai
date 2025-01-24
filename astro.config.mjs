@@ -22,4 +22,7 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+  devToolbar: {
+    enabled: false,
+  },
 });

@@ -76,13 +76,13 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
 
     return (
         <>
-            <div className="py-4">
+            {/* <div className="py-4">
                 <p className="text-sm text-red-400">
                     Showing {filteredItems.length} results for query:{" "}
                     <strong>{query}</strong>, category:{" "}
                     <strong>{category || "All"}</strong>, sort by: <strong>{sort}</strong>
                 </p>
-            </div>
+            </div> */}
             <ol className="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item) => (
