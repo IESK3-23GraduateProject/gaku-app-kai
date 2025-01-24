@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { DatePicker } from '../date-picker';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '../ui/input';
+import { DatePicker } from "../date-picker";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "../ui/input";
 
-// Retrieve user data from localStorage
+// Utility function to get user data from localStorage
 const getUserData = () => {
-  const userDataString = localStorage.getItem("userData");
-  return userDataString ? JSON.parse(userDataString) : null;
+  if (typeof window !== "undefined") {
+    const userData = localStorage.getItem("userData");
+    return userData ? JSON.parse(userData) : null;
+  }
+  return null;
 };
 
 // Absence Form Component
 export const AbsenceForm = () => {
-  const [type, setType] = useState('');
-  const [reason, setReason] = useState('');
+  const [type, setType] = useState("");
+  const [reason, setReason] = useState("");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [userData, setUserData] = useState<any>(null);
 
@@ -25,14 +34,14 @@ export const AbsenceForm = () => {
 
   const handleSubmit = () => {
     // Add submission logic here
-    console.log('Absence Form Submitted', { type, reason, date });
+    console.log("Absence Form Submitted", { type, reason, date });
   };
 
   return (
     <div className="bg-white rounded-lg px-2 pb-8">
       <div className="mb-8">
         <h3 className="text-xl font-semibold mb-1">欠席・遅刻・早退連絡</h3>
-        <p className="text-gray-500">連絡を送りましょう～</p>
+        <p className="text-gray-500">連絡をしましょう～</p>
       </div>
 
       <div className="space-y-6">
@@ -45,15 +54,9 @@ export const AbsenceForm = () => {
           <Label className="text-base min-w-32">名前</Label>
           <p className="text-base ml-auto">{userData?.user_name || "N/A"}</p>
         </div>
-
         <div className="flex items-center">
           <Label className="text-base min-w-32">メールアドレス</Label>
           <p className="text-base ml-auto">{userData?.email || "N/A"}</p>
-        </div>
-
-        <div className="flex items-center">
-          <Label className="text-base min-w-32">所属クラス</Label>
-          <p className="text-base ml-auto">{userData?.hr_class_id || "N/A"}</p>
         </div>
 
         <div className="space-y-2">
@@ -67,12 +70,15 @@ export const AbsenceForm = () => {
 
         <div className="space-y-2">
           <Label className="text-base">種別選択</Label>
-          <Select value={type} onValueChange={(value) => {
-            setType(value);
-            if (value !== "leaving-early") {
-              setReason('');
-            }
-          }}>
+          <Select
+            value={type}
+            onValueChange={(value) => {
+              setType(value);
+              if (value !== "leaving-early") {
+                setReason("");
+              }
+            }}
+          >
             <SelectTrigger className="w-full h-7">
               <SelectValue placeholder="種別選択" />
             </SelectTrigger>
@@ -112,8 +118,142 @@ export const AbsenceForm = () => {
           className="w-32 bg-black text-white hover:bg-gray-800"
           onClick={handleSubmit}
         >
-          送信
+          送信する
         </Button>
+      </div>
+    </div>
+  );
+};
+
+// Official Absence Form Component
+export const OfficialAbsenseForm = () => {
+  const [companyName, setCompanyName] = useState("");
+  const [location, setLocation] = useState("");
+  const [type, setType] = useState("");
+  const [content, setContent] = useState("");
+  const [interviewDate, setInterviewDate] = useState<Date | undefined>(undefined);
+  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    const storedUserData = getUserData();
+    if (storedUserData) setUserData(storedUserData);
+  }, []);
+
+  const handleSubmit = () => {
+    // Add submission logic here
+    console.log("Official Absence Form Submitted", {
+      companyName,
+      type,
+      location,
+      content,
+      interviewDate,
+      additionalNotes,
+    });
+  };
+
+  return (
+    <div className="bg-white rounded-lg px-2 pb-8">
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-1">就職公欠届の申請</h3>
+        <p className="text-gray-500">Submit your job-related absence request</p>
+      </div>
+      <div className="space-y-6">
+        <div className="flex items-center">
+          <Label className="text-base min-w-32">学籍番号</Label>
+          <p className="text-base ml-auto">{userData?.student_user_id || "N/A"}</p>
+        </div>
+
+        <div className="flex items-center">
+          <Label className="text-base min-w-32">名前</Label>
+          <p className="text-base ml-auto">{userData?.user_name || "N/A"}</p>
+        </div>
+
+        <div className="flex items-center">
+          <Label className="text-base min-w-32">メールアドレス</Label>
+          <p className="text-base ml-auto">{userData?.email || "N/A"}</p>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">実施形態</Label>
+          <Select value={type} onValueChange={setType}>
+            <SelectTrigger className="w-full h-7">
+              <SelectValue placeholder="実施形態を選択" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="web">Web</SelectItem>
+              <SelectItem value="on-site">対面</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">場所</Label>
+          <Select value={location} onValueChange={setLocation}>
+            <SelectTrigger className="w-full h-7">
+              <SelectValue placeholder="場所を選択" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="home">自宅</SelectItem>
+              <SelectItem value="school">学校</SelectItem>
+              <SelectItem value="company">企業</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">内容</Label>
+          <Select value={content} onValueChange={setContent}>
+            <SelectTrigger className="w-full h-7">
+              <SelectValue placeholder="内容を選択" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="info-session">説明会</SelectItem>
+              <SelectItem value="internship">インターンシップ</SelectItem>
+              <SelectItem value="test">筆記試験</SelectItem>
+              <SelectItem value="interview">面接</SelectItem>
+              <SelectItem value="test-interview">筆記試験＋面接</SelectItem>
+              <SelectItem value="consult">面談</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">会社名</Label>
+          <Input
+            className="w-full"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="面接を受ける会社名を入力"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">面接日</Label>
+          <DatePicker
+            selected={interviewDate}
+            onSelect={setInterviewDate}
+            placeholder="面接日を選択"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">その他の連絡</Label>
+          <Input
+            className="w-full"
+            value={additionalNotes}
+            onChange={(e) => setAdditionalNotes(e.target.value)}
+          />
+        </div>
+
+        <div className="mt-8">
+          <Button
+            className="w-32 bg-black text-white hover:bg-gray-800"
+            onClick={handleSubmit}
+          >
+            申請する
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -146,6 +286,7 @@ export default function AbsentFormsComponent() {
         </aside>
         <main className="flex-1">
           {activeSection === "absence" && <AbsenceForm />}
+          {activeSection === "officialAbsense" && <OfficialAbsenseForm />}
         </main>
       </div>
     </div>
