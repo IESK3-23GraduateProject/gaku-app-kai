@@ -26,15 +26,36 @@ export const AbsenceForm = () => {
   const [reason, setReason] = useState("");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [userData, setUserData] = useState<any>(null);
+  const userId = userData?.student_user_id;
+  const uname = userData?.user_name;
 
   useEffect(() => {
     const storedUserData = getUserData();
     if (storedUserData) setUserData(storedUserData);
   }, []);
 
-  const handleSubmit = () => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    
     // Add submission logic here
     console.log("Absence Form Submitted", { type, reason, date });
+
+    const response = await fetch("http://localhost:3000/absent/submit", {
+
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({userId,uname,date,type,reason}),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if(data.success){
+        console.log(data.message);
+        console.log("データを送信しました");
+      }else{
+        console.log(data.message);
+        console.log("エラー");
+      }
   };
 
   return (
@@ -109,7 +130,7 @@ export const AbsenceForm = () => {
 
         <div className="space-y-2">
           <Label className="text-base">その他の連絡</Label>
-          <Input className="w-full" onChange={(e) => setReason(e.target.value)} />
+          <Input className="w-full" onChange={(e) => setReason(e.target.value)}/>
         </div>
       </div>
 
@@ -134,15 +155,20 @@ export const OfficialAbsenseForm = () => {
   const [interviewDate, setInterviewDate] = useState<Date | undefined>(undefined);
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [userData, setUserData] = useState<any>(null);
+  const userId = userData?.student_user_id;
+  const uname = userData?.user_name;
 
   useEffect(() => {
     const storedUserData = getUserData();
     if (storedUserData) setUserData(storedUserData);
   }, []);
 
-  const handleSubmit = () => {
+
+  const handleSubmit = async (e: React.FormEvent) =>  {
     // Add submission logic here
     console.log("Official Absence Form Submitted", {
+      userId,
+      uname,
       companyName,
       type,
       location,
@@ -150,6 +176,23 @@ export const OfficialAbsenseForm = () => {
       interviewDate,
       additionalNotes,
     });
+    const response = await fetch("http://localhost:3000/official-absent/submit", {
+
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({userId,uname,companyName,type,location,content,interviewDate,additionalNotes}),
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    if(data.success){
+      console.log(data.message);
+      console.log("データを送信しました");
+    }else{
+      console.log(data.message);
+      console.log("エラー");
+    }
   };
 
   return (
