@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "@nanostores/react";
+import { newsItems, fetchNewsItems, subscribeToRealtimeUpdates } from "@/lib/newsStore";
 import {
     getFilteredItems,
     searchQuery,
@@ -7,30 +8,29 @@ import {
     sortOption,
 } from "@/lib/newsSearchStore";
 
-interface NewsItem {
-    student_news_id: number;
-    title: string;
-    news_category_name: string;
-    news_contents: string;
-    author_name: string;
-    is_public: boolean;
-    high_priority: boolean;
-    publish_at: string;
-    created_at: string;
-    updated_at: string;
-    read_at: string;
-    is_read: boolean;
-}
-
-interface InfoSectionProps {
-    items: NewsItem[];
-}
-
-const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
-    const filteredItems = getFilteredItems(items);
+const InfoSection: React.FC = () => {
+    const items = useStore(newsItems);
     const query = useStore(searchQuery);
     const category = useStore(selectedCategory);
     const sort = useStore(sortOption);
+
+    // Trigger data fetching and realtime subscription on mount
+    useEffect(() => {
+        // Fetch initial data
+        fetchNewsItems();
+
+        // Subscribe to realtime updates
+        const subscription = subscribeToRealtimeUpdates();
+
+        // Cleanup subscription on unmount
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []);
+
+    // Get filtered items based on search, category, and sort
+    const filteredItems = getFilteredItems(items);
+
 
     // Map category to TailwindCSS background classes
     const getCategoryClass = (category: string) => {
@@ -56,14 +56,6 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
         }
     };
 
-    // Truncate content preview based on language (words for English, characters for Japanese)
-    const truncateContent = (content: string) => {
-        if (content.includes(" ")) {
-            const words = content.split(" ");
-            return words.length > 50 ? words.slice(0, 50).join(" ") + "..." : content;
-        }
-        return content.length > 150 ? content.slice(0, 150) + "..." : content;
-    };
 
     // Format publish_at to "YYYY年MM月DD日 + に投稿"
     const formatDate = (publishAt: string) => {
@@ -74,8 +66,8 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
         return `${year}年${month}月${day}日`;
     };
 
-    return (
 
+    return (
         <ol className="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
             {filteredItems.length > 0 ? (
                 filteredItems.map((item) => (
@@ -96,9 +88,6 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                                 <h3 className="text-lg font-semibold group-hover:underline leading-snug">
                                     {item.title}
                                 </h3>
-                                <p className="mt-2 text-sm text-gray-600 hidden lg:block">
-                                    {truncateContent(item.news_contents)}
-                                </p>
                             </div>
                             <div className="flex items-center gap-2 mt-2 lg:mt-0 lg:justify-end">
                                 <span
@@ -122,7 +111,6 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
                 <p className="text-center text-gray-500">No results found.</p>
             )}
         </ol>
-
     );
 };
 
