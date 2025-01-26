@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Bell, CheckCircle } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 
 type Notification = {
   student_news_id: number;
@@ -18,36 +18,63 @@ export default function NotificationBar() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchStudentNewsData = async () => {
-      try {
-        // Retrieve user data from localStorage
-        const storedUserData = localStorage.getItem("userData");
-        if (!storedUserData) {
-          setError("User data not found. Please log in.");
-          return;
-        }
-
-        const userData = JSON.parse(storedUserData);
-        const userId = userData.student_user_id;
-
-        // Fetch notifications for the user
-        const response = await fetch(`http://localhost:3000/student-mentions?userId=${userId}`);
-        if (!response.ok) throw new Error("Failed to fetch notifications");
-
-        const data: Notification[] = await response.json();
-        setNotifications(data);
-
-        // Count unread notifications
-        const unread = data.filter((notification) => !notification.is_mention_read).length;
-        setUnreadCount(unread);
-      } catch (error: any) {
-        console.error("Error fetching notifications:", error);
-        setError(error.message || "Error fetching notifications");
+  // Function to fetch notifications
+  const fetchNotifications = async () => {
+    try {
+      // Retrieve user data from localStorage
+      const storedUserData = localStorage.getItem("userData");
+      if (!storedUserData) {
+        setError("User data not found. Please log in.");
+        return;
       }
-    };
 
-    fetchStudentNewsData();
+      const userData = JSON.parse(storedUserData);
+      const userId = userData.student_user_id;
+
+      // Fetch notifications for the user
+      const response = await fetch(`http://localhost:3000/student-mentions?userId=${userId}`);
+      if (!response.ok) throw new Error("Failed to fetch notifications");
+
+      const data: Notification[] = await response.json();
+      setNotifications(data);
+
+      // Count unread notifications
+      const unread = data.filter((notification) => !notification.is_mention_read).length;
+      setUnreadCount(unread);
+    } catch (error: any) {
+      console.error("Error fetching notifications:", error);
+      setError(error.message || "Error fetching notifications");
+    }
+  };
+
+  // Function to handle real-time updates
+  const subscribeToRealtimeUpdates = () => {
+    const channel = supabase
+      .channel("student-mentions-updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "student_news_mentions" },
+        async (payload) => {
+          console.log("student_news_mentions update detected:", payload);
+          await fetchNotifications(); // Refetch notifications when a change occurs
+        }
+      )
+      .subscribe();
+
+    return channel; // Return the channel for cleanup
+  };
+
+  useEffect(() => {
+    // Initial fetch of notifications
+    fetchNotifications();
+
+    // Subscribe to real-time updates
+    const channel = subscribeToRealtimeUpdates();
+
+    // Cleanup subscription on component unmount
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const handleNotificationClick = (id: number) => {
@@ -86,9 +113,7 @@ export default function NotificationBar() {
                           }`}
                       />
                       <div>
-                        <h3 className="text-sm font-bold">
-                          {notification.title}
-                        </h3>
+                        <h3 className="text-sm font-bold">{notification.title}</h3>
                         <p className="text-xs text-gray-500">
                           公開日: {new Date(notification.publish_at).toLocaleDateString("ja-JP")}
                         </p>

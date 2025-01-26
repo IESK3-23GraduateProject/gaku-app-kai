@@ -10,7 +10,7 @@ const fetchStudentNewsDatas = async () => {
   const data = await response.json();
   return data;
 };
-const item = await fetchStudentNewsDatas();
+const initialItems = await fetchStudentNewsDatas();
 
 ---
 
@@ -20,6 +20,6 @@ const item = await fetchStudentNewsDatas();
   >
     <DesktopSearchBar client:load />
     <MobileSearchBar client:load />
-    <InfoSection client:load items={item} />
+    <InfoSection client:load />
   </main>
 </Layout>
