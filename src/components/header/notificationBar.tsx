@@ -36,7 +36,7 @@ export default function NotificationBar() {
       if (!response.ok) throw new Error("Failed to fetch notifications");
 
       const data: Notification[] = await response.json();
-      setNotifications(data);
+      setNotifications(data.slice(0, 8));
 
       // Count unread notifications
       const unread = data.filter((notification) => !notification.is_mention_read).length;

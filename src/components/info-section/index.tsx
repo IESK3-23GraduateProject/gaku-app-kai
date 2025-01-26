@@ -8,7 +8,11 @@ import {
     sortOption,
 } from "@/lib/newsSearchStore";
 
-const InfoSection: React.FC = () => {
+interface InfoSectionProps {
+    initialItems: any[]; // Adjust the type if needed for stricter typing
+}
+
+const InfoSection: React.FC<InfoSectionProps> = ({ initialItems }) => {
     const items = useStore(newsItems);
     const query = useStore(searchQuery);
     const category = useStore(selectedCategory);
@@ -16,8 +20,8 @@ const InfoSection: React.FC = () => {
 
     // Trigger data fetching and realtime subscription on mount
     useEffect(() => {
-        // Fetch initial data
-        fetchNewsItems();
+        // Initialize the store with initial items
+        newsItems.set(initialItems);
 
         // Subscribe to realtime updates
         const subscription = subscribeToRealtimeUpdates();
@@ -26,11 +30,10 @@ const InfoSection: React.FC = () => {
         return () => {
             subscription.unsubscribe();
         };
-    }, []);
+    }, [initialItems]);
 
     // Get filtered items based on search, category, and sort
     const filteredItems = getFilteredItems(items);
-
 
     // Map category to TailwindCSS background classes
     const getCategoryClass = (category: string) => {
@@ -56,7 +59,6 @@ const InfoSection: React.FC = () => {
         }
     };
 
-
     // Format publish_at to "YYYY年MM月DD日 + に投稿"
     const formatDate = (publishAt: string) => {
         const date = new Date(publishAt);
@@ -65,7 +67,6 @@ const InfoSection: React.FC = () => {
         const day = String(date.getDate()).padStart(2, "0");
         return `${year}年${month}月${day}日`;
     };
-
 
     return (
         <ol className="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">

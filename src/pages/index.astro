@@ -20,6 +20,6 @@ const initialItems = await fetchStudentNewsDatas();
   >
     <DesktopSearchBar client:load />
     <MobileSearchBar client:load />
-    <InfoSection client:load />
+    <InfoSection client:load initialItems={initialItems} />
   </main>
 </Layout>
