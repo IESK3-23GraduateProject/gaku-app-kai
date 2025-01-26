@@ -56,6 +56,8 @@ export const getFilteredItems = (items: NewsItem[]) => {
           return item.news_category_name === "クラブ・サークル";
         case "other":
           return item.news_category_name === "その他";
+        case "event":
+          return item.news_category_name === "学校行事";
         default:
           return true;
       }

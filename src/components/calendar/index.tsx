@@ -32,7 +32,7 @@ type Event = {
     is_public: boolean;
     is_cancelled: boolean;
     created_at: string;
-    updated_at:string;
+    updated_at: string;
 };
 
 interface CalendarProps {
@@ -43,7 +43,7 @@ export default function Calendar({ events }: CalendarProps) {
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
-    let [isWeekView, setIsWeekView] = useState(false)
+    let [isWeekView, setIsWeekView] = useState(true)
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
     // Get days based on current view

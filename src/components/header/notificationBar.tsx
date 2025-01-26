@@ -86,13 +86,14 @@ export default function NotificationBar() {
                           }`}
                       />
                       <div>
-                        <h3 className="text-sm font-bold">{notification.title}</h3>
-                        <p className="text-xs text-gray-500">{notification.news_contents}</p>
+                        <h3 className="text-sm font-bold">
+                          {notification.title}
+                        </h3>
+                        <p className="text-xs text-gray-500">
+                          公開日: {new Date(notification.publish_at).toLocaleDateString("ja-JP")}
+                        </p>
                       </div>
                     </div>
-                    {!notification.is_mention_read && (
-                      <div className="absolute top-1 right-1 h-2 w-2 bg-green-500 rounded-full"></div>
-                    )}
                   </div>
                 ))
               ) : (

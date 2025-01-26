@@ -75,61 +75,54 @@ const InfoSection: React.FC<InfoSectionProps> = ({ items }) => {
     };
 
     return (
-        <>
-            {/* <div className="py-4">
-                <p className="text-sm text-red-400">
-                    Showing {filteredItems.length} results for query:{" "}
-                    <strong>{query}</strong>, category:{" "}
-                    <strong>{category || "All"}</strong>, sort by: <strong>{sort}</strong>
-                </p>
-            </div> */}
-            <ol className="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
-                {filteredItems.length > 0 ? (
-                    filteredItems.map((item) => (
-                        <li
-                            key={item.student_news_id}
-                            className="col-span-10 px-2 sm:px-4 [&_a]:last:border-none border-b"
+
+        <ol className="grid -mx-2 sm:-mx-4 py-4 lg:py-6 lg:pb-20 grid-cols-1 max-w-screen-xl">
+            {filteredItems.length > 0 ? (
+                filteredItems.map((item) => (
+                    <li
+                        key={item.student_news_id}
+                        className="col-span-10 px-2 sm:px-4 [&_a]:last:border-none border-b"
+                    >
+                        <a
+                            href={`/news/${item.student_news_id}`}
+                            className="group flex flex-col lg:flex-row w-full py-2 sm:py-4"
                         >
-                            <a
-                                href={`/news/${item.student_news_id}`}
-                                className="group flex flex-col lg:flex-row w-full py-2 sm:py-4"
-                            >
-                                <div className="flex-1 lg:pr-4">
-                                    {!item.is_read && (
-                                        <div className="absolute w-3 h-3 bg-sky-500 rounded-full mt-1.5 left-1 border border-white dark:border-stone-900 dark:bg-stone-700">
-                                            <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-50"></span>
-                                        </div>
-                                    )}
-                                    <h3 className="text-lg font-semibold group-hover:underline leading-snug">
-                                        {item.title}
-                                    </h3>
-                                    <p className="mt-2 text-sm text-gray-600 hidden lg:block">
-                                        {truncateContent(item.news_contents)}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-2 mt-2 lg:mt-0 lg:justify-end">
-                                    <span
-                                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getCategoryClass(
-                                            item.news_category_name
-                                        )}`}
-                                    >
-                                        {item.news_category_name}
-                                    </span>
-                                    {item.high_priority && (
-                                        <span className="text-red-600 font-bold text-base">必須</span>
-                                    )}
-                                    <span className="text-sm text-gray-500">
-                                        {formatDate(item.publish_at)}
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                    ))
-                ) : (
-                    <p className="text-center text-gray-500">No results found.</p>
-                )}
-            </ol>
-        </>
+                            <div className="flex-1 lg:pr-4">
+                                {!item.is_read && (
+                                    <div className="absolute w-3 h-3 bg-sky-500 rounded-full mt-1.5 left-1 border border-white dark:border-stone-900 dark:bg-stone-700">
+                                        <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-50"></span>
+                                    </div>
+                                )}
+                                <h3 className="text-lg font-semibold group-hover:underline leading-snug">
+                                    {item.title}
+                                </h3>
+                                <p className="mt-2 text-sm text-gray-600 hidden lg:block">
+                                    {truncateContent(item.news_contents)}
+                                </p>
+                            </div>
+                            <div className="flex items-center gap-2 mt-2 lg:mt-0 lg:justify-end">
+                                <span
+                                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getCategoryClass(
+                                        item.news_category_name
+                                    )}`}
+                                >
+                                    {item.news_category_name}
+                                </span>
+                                {item.high_priority && (
+                                    <span className="text-red-600 font-bold text-base">必須</span>
+                                )}
+                                <span className="text-sm text-gray-500">
+                                    {formatDate(item.publish_at)}
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                ))
+            ) : (
+                <p className="text-center text-gray-500">No results found.</p>
+            )}
+        </ol>
+
     );
 };
 
