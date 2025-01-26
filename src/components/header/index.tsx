@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -115,11 +114,10 @@ export default function Header({ title }: { title: string }) {
                 <a
                   href={item.url}
                   key={index}
-                  className={`flex items-center justify-start gap-2 px-2 py-1 rounded-lg transition-colors ${
-                    item.title === "ログアウト"
-                      ? "bg-blue-500 text-white font-bold hover:bg-blue-600 w-fit"
-                      : "text-[#3f3f46] hover:bg-secondary"
-                  }`}
+                  className={`flex items-center justify-start gap-2 px-2 py-1 rounded-lg transition-colors ${item.title === "ログアウト"
+                    ? "bg-blue-500 text-white font-bold hover:bg-blue-600 w-fit"
+                    : "text-[#3f3f46] hover:bg-secondary"
+                    }`}
                   onClick={toggleMenu}
                 >
                   <item.icon strokeWidth={1} />
@@ -145,10 +143,6 @@ export default function Header({ title }: { title: string }) {
               alt="ECC Logo"
               className="h-8 w-8 rounded-md"
             />
-            {/* Hover effect */}
-            <span className="absolute top-full left-1/2 transform -translate-x-1/2 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-4 bg-gray-800 text-white text-xs font-medium px-3 py-1 rounded-md shadow-md transition-all duration-300">
-              プロファイルへ
-            </span>
           </a>
         </div>
       </div>

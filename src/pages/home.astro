@@ -96,8 +96,8 @@ const buttons = [
     <UserWelcome client:only="react" /> <!-- Use the hydrated component here -->
 
     <!-- Recent News Sneak Peek -->
-    <section class="mt-8">
-      <h2 class="text-lg font-bold mb-4">
+    <section class="mt-4">
+      <h2 class="text-lg font-bold">
         <a href="/">最近のニュース</a>
       </h2>
       <InfoSection client:load items={limitedNews} />
@@ -147,7 +147,7 @@ const buttons = [
               href={button.url}
               class="flex flex-col items-center justify-center gap-2 p-6 bg-sky-200 hover:bg-sky-300 rounded-md shadow-md transition duration-200"
             >
-              <button.icon class="w-10 h-10 text-sky-900" />
+              <button.icon className="w-10 h-10 text-sky-900" />
               <span class="text-lg font-bold text-sky-900 text-center">
                 {button.title}
               </span>
@@ -157,9 +157,4 @@ const buttons = [
       </div>
     </section>
 
-    <!-- Image Section -->
-    <div class="mt-8">
-      <img
-        src="/src/components/img/home.png"
-        alt="Classroom"
    
