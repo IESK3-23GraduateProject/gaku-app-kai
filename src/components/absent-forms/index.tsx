@@ -28,7 +28,7 @@ export const AbsenceForm = () => {
   const [userData, setUserData] = useState<any>(null);
   const userId = userData?.student_user_id;
   const uname = userData?.user_name;
-
+  const [message, setMessage] = useState('');
   useEffect(() => {
     const storedUserData = getUserData();
     if (storedUserData) setUserData(storedUserData);
@@ -39,20 +39,22 @@ export const AbsenceForm = () => {
     
     // Add submission logic here
     console.log("Absence Form Submitted", { type, reason, date });
-
+    setMessage("");
     const response = await fetch("http://localhost:3000/absent/submit", {
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({userId,uname,date,type,reason}),
       });
-
+      
       const data = await response.json();
       console.log(data);
       if(data.success){
         console.log(data.message);
+        setMessage(data.message);
         console.log("データを送信しました");
       }else{
+        setMessage(data.message);
         console.log(data.message);
         console.log("エラー");
       }
@@ -142,6 +144,7 @@ export const AbsenceForm = () => {
           送信する
         </Button>
       </div>
+      {message && <p>{message}</p>}
     </div>
   );
 };
@@ -157,7 +160,7 @@ export const OfficialAbsenseForm = () => {
   const [userData, setUserData] = useState<any>(null);
   const userId = userData?.student_user_id;
   const uname = userData?.user_name;
-
+  const [message, setMessage] = useState("");
   useEffect(() => {
     const storedUserData = getUserData();
     if (storedUserData) setUserData(storedUserData);
@@ -176,6 +179,7 @@ export const OfficialAbsenseForm = () => {
       interviewDate,
       additionalNotes,
     });
+    setMessage("");
     const response = await fetch("http://localhost:3000/official-absent/submit", {
 
       method: "POST",
@@ -189,9 +193,11 @@ export const OfficialAbsenseForm = () => {
     if(data.success){
       console.log(data.message);
       console.log("データを送信しました");
+      setMessage(data.message);
     }else{
       console.log(data.message);
       console.log("エラー");
+      setMessage(data.message);
     }
   };
 
@@ -297,6 +303,7 @@ export const OfficialAbsenseForm = () => {
             申請する
           </Button>
         </div>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );
