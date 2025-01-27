@@ -3,6 +3,8 @@ import { Bell, CheckCircle } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 type Notification = {
   student_news_id: number;
@@ -17,6 +19,8 @@ export default function NotificationBar() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
+
+  const { toast } = useToast(); // Initialize the toast hook
 
   // Function to fetch notifications
   const fetchNotifications = async () => {
@@ -56,7 +60,32 @@ export default function NotificationBar() {
         { event: "*", schema: "public", table: "student_news_mentions" },
         async (payload) => {
           console.log("student_news_mentions update detected:", payload);
-          await fetchNotifications(); // Refetch notifications when a change occurs
+
+          // Refetch notifications
+          await fetchNotifications();
+          const response = await fetch(`http://localhost:3000/student-news/${payload.new.student_news_id}`);
+          const data = await response.json();
+          console.log("data", data)
+          toast({
+            title: "New Mention",
+            description: `${data[0].title}`,
+            variant: "default",
+            action: (
+              <ToastAction
+                altText="Go to the news detail page"
+                asChild
+              >
+                <a
+                  href={`http://localhost:4321/news/${data[0].student_news_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  詳細
+                </a>
+              </ToastAction>
+            ),
+          });
         }
       )
       .subscribe();
