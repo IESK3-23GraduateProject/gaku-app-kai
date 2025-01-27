@@ -34,7 +34,6 @@ const { title } = Astro.props;
     <Header title={title} client:load />
     <slot />
     <Footer />
-    <ToastDemo client:load/>
     <Toaster client:load/>
   </body>
   <script>
