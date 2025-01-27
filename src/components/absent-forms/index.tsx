@@ -36,28 +36,28 @@ export const AbsenceForm = () => {
 
 
   const handleSubmit = async (e: React.FormEvent) => {
-    
+
     // Add submission logic here
     console.log("Absence Form Submitted", { type, reason, date });
     setMessage("");
     const response = await fetch("http://localhost:3000/absent/submit", {
 
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({userId,uname,date,type,reason}),
-      });
-      
-      const data = await response.json();
-      console.log(data);
-      if(data.success){
-        console.log(data.message);
-        setMessage(data.message);
-        console.log("データを送信しました");
-      }else{
-        setMessage(data.message);
-        console.log(data.message);
-        console.log("エラー");
-      }
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, uname, date, type, reason }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+      console.log(data.message);
+      setMessage(data.message);
+      console.log("データを送信しました");
+    } else {
+      setMessage(data.message);
+      console.log(data.message);
+      console.log("エラー");
+    }
   };
 
   return (
@@ -132,7 +132,7 @@ export const AbsenceForm = () => {
 
         <div className="space-y-2">
           <Label className="text-base">その他の連絡</Label>
-          <Input className="w-full" onChange={(e) => setReason(e.target.value)}/>
+          <Input className="w-full" onChange={(e) => setReason(e.target.value)} />
         </div>
       </div>
 
@@ -167,7 +167,7 @@ export const OfficialAbsenseForm = () => {
   }, []);
 
 
-  const handleSubmit = async (e: React.FormEvent) =>  {
+  const handleSubmit = async (e: React.FormEvent) => {
     // Add submission logic here
     console.log("Official Absence Form Submitted", {
       userId,
@@ -184,17 +184,17 @@ export const OfficialAbsenseForm = () => {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({userId,uname,companyName,type,location,content,interviewDate,additionalNotes}),
+      body: JSON.stringify({ userId, uname, companyName, type, location, content, interviewDate, additionalNotes }),
     });
 
     const data = await response.json();
     console.log(data);
 
-    if(data.success){
+    if (data.success) {
       console.log(data.message);
       console.log("データを送信しました");
       setMessage(data.message);
-    }else{
+    } else {
       console.log(data.message);
       console.log("エラー");
       setMessage(data.message);
