@@ -11,6 +11,10 @@ import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
 export default defineConfig({
+  server: {
+    host: "0.0.0.0", // Listen on all interfaces instead of just localhost
+    port: 4321,
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
@@ -26,22 +30,12 @@ export default defineConfig({
         theme_color: "#ffffff",
         icons: [
           {
-            src: "pwa-192x192.png",
+            src: "/android-chrome.png",
             sizes: "192x192",
             type: "image/png",
           },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
         ],
+        display: "standalone",
       },
       devOptions: {
         enabled: true,

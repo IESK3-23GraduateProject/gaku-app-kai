@@ -151,7 +151,7 @@ export default function LoginComponent() {
           </div>
         </form>
         <div className="mt-4 text-center space-y-2">
-            アプリのログイン出来ない方は事務局へ
+          アプリのログイン出来ない方は事務局へ
           <br />
           <a
             href="/forgot-password"
