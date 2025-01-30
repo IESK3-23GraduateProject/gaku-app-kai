@@ -23,4 +23,20 @@ export function showNotification(
   return Promise.resolve();
 }
 
-(window as any).showNotification = showNotification;
+export async function sendPushNotification(
+  title: string,
+  body: string,
+  newsId: number
+) {
+  if ("serviceWorker" in navigator) {
+    const registration = await navigator.serviceWorker.ready;
+    registration.showNotification(title, {
+      body,
+      icon: "/android-chrome.png",
+      badge: "/android-chrome.png",
+      data: { url: `http://localhost:4321/news/${newsId}` }, // Pass URL to open
+    });
+  } else {
+    console.error("Service Worker is not registered.");
+  }
+}
