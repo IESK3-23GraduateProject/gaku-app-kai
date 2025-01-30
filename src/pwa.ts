@@ -1,4 +1,5 @@
 import { registerSW } from "virtual:pwa-register";
+import { requestNotificationPermission } from "./pwa/notifications";
 
 registerSW({
   immediate: true,
@@ -11,3 +12,5 @@ registerSW({
     console.log("PWA application ready to work offline");
   },
 });
+
+requestNotificationPermission();

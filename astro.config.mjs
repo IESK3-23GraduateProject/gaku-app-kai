@@ -23,6 +23,17 @@ export default defineConfig({
     react(),
     AstroPWA({
       registerType: "autoUpdate",
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith("/"),
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "astro-pwa",
+            },
+          },
+        ],
+      },
       manifest: {
         name: "ECCGakuApp改",
         short_name: "GakuApp改",
