@@ -82,7 +82,7 @@ const attendanceRecords = getAttendanceRecords(subjectId);
             </tr>
           </thead>
           <tbody>
-            {attendanceRecords.map((record) => (
+            {attendanceRecords.map((record: { date: unknown; session: unknown; status: unknown; }) => (
               <tr>
                 <td class="border px-4 py-2">{record.date}</td>
                 <td class="border px-4 py-2">{record.session}</td>
