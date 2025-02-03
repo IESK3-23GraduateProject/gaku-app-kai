@@ -63,7 +63,7 @@ export default function NotificationBar() {
 
           // Refetch notifications
           await fetchNotifications();
-          const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news/${payload.new.student_news_id}`);
+          const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news/${(payload.new as { student_news_id: number }).student_news_id}`);
           const data = await response.json();
           console.log("data", data)
           toast({
