@@ -14,6 +14,17 @@ const initialItems = await fetchStudentNewsDatas();
 
 ---
 
+<!-- redirect script block -->
+<script>
+  if (typeof window !== 'undefined') {
+    const userSession = localStorage.getItem("userSession");
+    // or check localStorage.getItem("userData"), whichever you prefer
+    if (!userSession) {
+      window.location.href = "/login";
+    }
+  }
+</script>
+
 <Layout title="お知らせ">
   <main
     class="mt-12 md:container mx-auto lg:mt-8 px-6 sm:px-16 xl:px-20 min-h-screen max-w-screen-2xl w-full"

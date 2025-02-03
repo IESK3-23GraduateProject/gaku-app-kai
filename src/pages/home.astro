@@ -38,7 +38,7 @@ interface NewsItem {
 // Fetch student news for sneak peek (server-side)
 const fetchStudentNewsDatas = async (): Promise<NewsItem[]> => {
   try {
-    const response = await fetch("${import.meta.env.PUBLIC_API_URL}/student-news");
+    const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news`);
     if (!response.ok) throw new Error("Failed to fetch student news.");
     const data = await response.json();
     return data;
