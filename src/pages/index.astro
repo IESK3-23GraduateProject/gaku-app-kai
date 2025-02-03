@@ -6,7 +6,7 @@ import InfoSection from "@/components/info-section";
 
 
 const fetchStudentNewsDatas = async () => {
-  const response = await fetch("http://localhost:3000/student-news");
+  const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news`);
   const data = await response.json();
   return data;
 };

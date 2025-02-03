@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import { ja } from "date-fns/locale";
 
 const fetchschoolEventsDatas = async () => {
-  const response = await fetch("http://localhost:3000/school-events");
+  const response = await fetch("${import.meta.env.PUBLIC_API_URL}/school-events");
   const data = await response.json();
   return data;
 };
