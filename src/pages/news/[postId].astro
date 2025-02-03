@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 const { postId } = Astro.params;
 const fetchstudentNewsData = async () => {
-  const response = await fetch(`http://localhost:3000/student-news/${postId}`);
+  const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news/${postId}`);
   const data = await response.json();
   return data;
 };

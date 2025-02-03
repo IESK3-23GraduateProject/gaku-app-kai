@@ -17,7 +17,7 @@ export default function DesktopNotification() {
   useEffect(() => {
     const fetchStudentNewsData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/student-mentions`);
+        const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-mentions`);
         const data: Notification[] = await response.json();
         const unread = data.filter((notification) => !notification.is_mention_read).length;
         setUnreadCount(unread);

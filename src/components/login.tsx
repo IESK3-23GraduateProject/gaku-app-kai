@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 
 export default function LoginComponent() {
-  const [status, setStatus] = useState<
-    "loading" | "success" | "greeting" | null
-  >(null);
+  const [status, setStatus] = useState<"loading" | "success" | "greeting" | null>(null);
   const [username, setUsername] = useState("");
   const [logoutSuccess, setLogoutSuccess] = useState(false);
 
   useEffect(() => {
+    // Check for "?logoutSuccess=true" in the URL and handle
     const params = new URLSearchParams(window.location.search);
     if (params.get("logoutSuccess") === "true") {
       setLogoutSuccess(true);
+      // Remove query param so it doesn't persist
       const url = new URL(window.location.href);
       url.searchParams.delete("logoutSuccess");
       window.history.replaceState({}, document.title, url.toString());
+      // Dismiss the message after 3 seconds
       setTimeout(() => setLogoutSuccess(false), 3000);
     }
   }, []);
@@ -27,7 +28,8 @@ export default function LoginComponent() {
     setStatus("loading");
 
     try {
-      const response = await fetch("http://localhost:3000/login/submit", {
+      // Use backticks here so that PUBLIC_API_URL is injected correctly
+      const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/login/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, pass }),
@@ -36,6 +38,7 @@ export default function LoginComponent() {
       const data = await response.json();
 
       if (data.success) {
+        // Set session expiration for 30 minutes
         const sessionExpiration = new Date().getTime() + 30 * 60 * 1000;
         const sessionData = { userId, sessionExpiration };
         localStorage.setItem("userSession", JSON.stringify(sessionData));
@@ -48,6 +51,7 @@ export default function LoginComponent() {
         }
         setStatus("success");
 
+        // Transition to greeting, then redirect
         setTimeout(() => {
           setStatus("greeting");
           setTimeout(() => {
@@ -65,6 +69,7 @@ export default function LoginComponent() {
   };
 
   useEffect(() => {
+    // On mount, check if session is expired
     const sessionData = localStorage.getItem("userSession");
     if (sessionData) {
       const { sessionExpiration } = JSON.parse(sessionData);
@@ -106,17 +111,16 @@ export default function LoginComponent() {
       )}
 
       <div
-        className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${status ? "hidden" : ""}`}
+        className={`w-full max-w-md p-8 bg-white rounded-lg shadow-lg ${
+          status ? "hidden" : ""
+        }`}
       >
         <h2 className="text-sky-600 text-center text-2xl font-bold mb-6">
           ECC学生アプリ2.0
         </h2>
         <form name="form-login" className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label
-              htmlFor="UserId"
-              className="block text-sky-800 font-bold mb-2"
-            >
+            <label htmlFor="UserId" className="block text-sky-800 font-bold mb-2">
               学籍番号(ID)
             </label>
             <input

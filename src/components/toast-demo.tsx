@@ -18,7 +18,7 @@ export function ToastDemo() {
                             asChild // Use `asChild` to render a custom link instead of a button
                         >
                             <a
-                                href={`http://localhost:4321/news/1`}
+                                href={`${import.meta.env.PUBLIC_APP_URL}/news/1`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="underline"

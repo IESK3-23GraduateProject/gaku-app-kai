@@ -36,7 +36,7 @@ export default function NotificationBar() {
       const userId = userData.student_user_id;
 
       // Fetch notifications for the user
-      const response = await fetch(`http://localhost:3000/student-mentions?userId=${userId}`);
+      const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-mentions?userId=${userId}`);
       if (!response.ok) throw new Error("Failed to fetch notifications");
 
       const data: Notification[] = await response.json();
@@ -63,7 +63,7 @@ export default function NotificationBar() {
 
           // Refetch notifications
           await fetchNotifications();
-          const response = await fetch(`http://localhost:3000/student-news/${payload.new.student_news_id}`);
+          const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/student-news/${payload.new.student_news_id}`);
           const data = await response.json();
           console.log("data", data)
           toast({
@@ -76,7 +76,7 @@ export default function NotificationBar() {
                 asChild
               >
                 <a
-                  href={`http://localhost:4321/news/${data[0].student_news_id}`}
+                  href={`${import.meta.env.PUBLIC_APP_URL}/news/${data[0].student_news_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline"
@@ -107,7 +107,7 @@ export default function NotificationBar() {
   }, []);
 
   const handleNotificationClick = (id: number) => {
-    window.location.href = `http://localhost:4321/news/${id}`;
+    window.location.href = `${import.meta.env.PUBLIC_APP_URL}/news/${id}`;
   };
 
   return (

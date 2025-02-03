@@ -40,7 +40,7 @@ export const AbsenceForm = () => {
     // Add submission logic here
     console.log("Absence Form Submitted", { type, reason, date });
     setMessage("");
-    const response = await fetch("http://localhost:3000/absent/submit", {
+    const response = await fetch("${import.meta.env.PUBLIC_API_URL}/absent/submit", {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -180,7 +180,7 @@ export const OfficialAbsenseForm = () => {
       additionalNotes,
     });
     setMessage("");
-    const response = await fetch("http://localhost:3000/official-absent/submit", {
+    const response = await fetch("${import.meta.env.PUBLIC_API_URL}/official-absent/submit", {
 
       method: "POST",
       headers: { "Content-Type": "application/json" },
